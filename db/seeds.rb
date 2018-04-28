@@ -13,3 +13,8 @@ User.create( email: "admin@example.com",
              introduction: "Hi! I'm Admin.",
              role: "admin"
            )
+
+category_names = ["Gossiping", "Game", "Tech", "Animal", "Emotion", "Marvel", "Travel"]
+category_names.each do |category_name|
+  Category.create( name: category_name )
+end
