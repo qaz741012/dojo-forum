@@ -7,4 +7,6 @@ class User < ApplicationRecord
   has_many :collects, dependent: :destroy
   has_many :collected_posts, through: :collects, source: :post
 
+  has_many :replies, dependent: :destroy
+  has_many :replied_posts, through: :replies, source: :post
 end
