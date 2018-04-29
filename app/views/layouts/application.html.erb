@@ -22,10 +22,10 @@
             <%= link_to "Feeds", "#", class: "nav-link" %>
           </li>
           <li class="nav-item">
-            <%= link_to "All Posts", "#", class: "nav-link" %>
+            <%= link_to "All Posts", root_path, class: "nav-link" %>
           </li>
           <li class="nav-item">
-            <%= link_to "New Post", "#", class: "nav-link" %>
+            <%= link_to "New Post", new_post_path, class: "nav-link" %>
           </li>
         </ul>
         <ul class="navbar-nav">
@@ -48,8 +48,10 @@
       </div>
     </nav>
 
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-    <%= yield %>
+    <div class="container">
+      <p class="notice"><%= notice %></p>
+      <p class="alert"><%= alert %></p>
+      <%= yield %>
+    </div>
   </body>
 </html>
