@@ -1,1 +1,17 @@
-Post#index
+<table class="table">
+  <tr>
+    <th>Replies count</th>
+    <th>Title</th>
+    <th>Last replied at</th>
+    <th>Viewed count</th>
+  </tr>
+
+  <% @posts.each do |post| %>
+    <tr>
+      <td><%= post.replies_count %></td>
+      <td><%= post.title %></td>
+      <td>...</td>
+      <td><%= post.viewed_count %></td>
+    </tr>
+  <% end %>
+</table>
