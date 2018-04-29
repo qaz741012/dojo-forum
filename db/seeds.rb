@@ -9,7 +9,8 @@
 User.destroy_all
 puts "Deleted all users."
 
-User.create( email: "admin@example.com",
+User.create( id: 1,
+             email: "admin@example.com",
              password: "12345678",
              name: "Admin",
              avatar: "http://www.lets-develop.com/wp-content/themes/olivias_theme/images/custom-avatar-admin.jpg",
