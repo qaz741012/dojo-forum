@@ -1,6 +1,8 @@
 class Post < ApplicationRecord
   validates :title, :content, :draft?, :user_id, presence: true
 
+  belongs_to :user
+
   has_many :replies, dependent: :destroy
   has_many :replied_users, through: :replies, source: :user
 
