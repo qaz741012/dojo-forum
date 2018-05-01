@@ -1,1 +1,34 @@
-New Posts
+<%= form_for @post do |f| %>
+  <div calss="form-group">
+    <%= f.text_field :title, placeholder: "Title", class: "form-control" %>
+  </div>
+  <br>
+
+  <div calss="form-group">
+    <%= f.text_area :content, placeholder: "Write something...", class: "form-control", rows: 8 %>
+  </div>
+  <br>
+
+  <div calss="form-group">
+    <%= f.file_field :photo %>
+  </div>
+  <br>
+
+  <div calss="form-group">
+    <%= f.label :auth, "Who can see" %>
+  </div>
+  <br>
+
+  <div calss="form-group">
+    <%= f.label "Category" %>
+    
+  </div>
+  <br>
+
+  <div calss="form-group">
+    <%= f.label :draft?, "Status:" %>
+  </div>
+
+  <%= f.submit "Save Draft", draft: true, class: "btn btn-secondary" %>
+  <%= f.submit "Submit", class: "btn btn-primary" %>
+<% end %>
