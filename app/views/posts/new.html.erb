@@ -17,6 +17,18 @@
   <div calss="form-group">
     <%= label_tag "auth", "Who can see" %>
 
+    <div class="form-check">
+      <%= radio_button_tag "post[auth]", "public", true, id: "auth-public" %>
+      <%= label_tag "auth-public", "All", class: "form-check-label" %>
+    </div>
+    <div class="form-check">
+      <%= radio_button_tag "post[auth]", "friend", false, id: "auth-friend" %>
+      <%= label_tag "auth-friend", "Friend", class: "form-check-label" %>
+    </div>
+    <div class="form-check">
+      <%= radio_button_tag "post[auth]", "self", false, id: "auth-self" %>
+      <%= label_tag "auth-self", "Myself", class: "form-check-label" %>
+    </div>
   </div>
   <br>
 
@@ -24,7 +36,8 @@
     <%= label_tag "category", "Category" %>
     <% @categories.each do |category| %>
       <div class="form-check">
-        <%= check_box_tag category.name, class: "form-check-input", id: "category-#{category.id}" %>
+        <%= check_box_tag "post_category[category_id]", category.id, false,
+         class: "form-check-input", id: "category-#{category.id}" %>
         <%= label_tag "category-#{category.id}", category.name, class: "form-check-label" %>
       </div>
     <% end %>
@@ -34,7 +47,6 @@
   <div calss="form-group">
     <%= label_tag "draft?", "Status:" %>
   </div>
-
   <%= submit_tag "Save Draft", draft: true, class: "btn btn-secondary" %>
   <%= submit_tag "Submit", class: "btn btn-primary" %>
 <% end %>
