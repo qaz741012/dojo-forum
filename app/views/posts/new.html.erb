@@ -16,7 +16,6 @@
 
   <div calss="form-group">
     <%= label_tag "auth", "Who can see" %>
-
     <div class="form-check">
       <%= radio_button_tag "post[auth]", "public", true, id: "auth-public" %>
       <%= label_tag "auth-public", "All", class: "form-check-label" %>
@@ -47,6 +46,6 @@
   <div calss="form-group">
     <%= label_tag "draft?", "Status:" %>
   </div>
-  <%= submit_tag "Save Draft", draft: true, class: "btn btn-secondary" %>
+  <%= submit_tag "Save Draft", class: "btn btn-secondary" %>
   <%= submit_tag "Submit", class: "btn btn-primary" %>
 <% end %>
