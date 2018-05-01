@@ -1,34 +1,40 @@
-<%= form_for @post do |f| %>
+<%= form_tag posts_path do %>
   <div calss="form-group">
-    <%= f.text_field :title, placeholder: "Title", class: "form-control" %>
+    <%= text_field_tag "post[title]", nil, placeholder: "Title", class: "form-control" %>
   </div>
   <br>
 
   <div calss="form-group">
-    <%= f.text_area :content, placeholder: "Write something...", class: "form-control", rows: 8 %>
+    <%= text_area_tag "post[content]", nil, placeholder: "Write something...", class: "form-control", rows: 8 %>
   </div>
   <br>
 
   <div calss="form-group">
-    <%= f.file_field :photo %>
+    <%= file_field_tag "post[photo]" %>
   </div>
   <br>
 
   <div calss="form-group">
-    <%= f.label :auth, "Who can see" %>
+    <%= label_tag "auth", "Who can see" %>
+
   </div>
   <br>
 
   <div calss="form-group">
-    <%= f.label "Category" %>
-    
+    <%= label_tag "category", "Category" %>
+    <% @categories.each do |category| %>
+      <div class="form-check">
+        <%= check_box_tag category.name, class: "form-check-input", id: "category-#{category.id}" %>
+        <%= label_tag "category-#{category.id}", category.name, class: "form-check-label" %>
+      </div>
+    <% end %>
   </div>
   <br>
 
   <div calss="form-group">
-    <%= f.label :draft?, "Status:" %>
+    <%= label_tag "draft?", "Status:" %>
   </div>
 
-  <%= f.submit "Save Draft", draft: true, class: "btn btn-secondary" %>
-  <%= f.submit "Submit", class: "btn btn-primary" %>
+  <%= submit_tag "Save Draft", draft: true, class: "btn btn-secondary" %>
+  <%= submit_tag "Submit", class: "btn btn-primary" %>
 <% end %>
