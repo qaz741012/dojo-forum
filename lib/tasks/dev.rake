@@ -2,6 +2,8 @@ namespace :dev do
   task fake_all: :environment do
     Rake::Task["dev:fake_user"].execute
     Rake::Task["dev:fake_post"].execute
+    Rake::Task["dev:fake_post_category"].execute
+    Rake::Task["dev:fake_reply"].execute
   end
 
   task fake_user: :environment do
@@ -42,6 +44,18 @@ namespace :dev do
         post.post_categories.create(category_id: category.id)
       end
     end
-    puts "Finished relationships between post and category."
+    puts "Finished fake relationships between post and category."
+  end
+
+  task fake_reply: :environment do
+    users = User.all
+
+    Post.find_each do |post|
+      users.sample(rand(0..5)).each do |user|
+        post.replies.create( user_id: user.id,
+                             comment: FFaker::Lorem::sentence(50) )
+      end
+    end
+    puts "Created fake replies."
   end
 end
