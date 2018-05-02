@@ -10,19 +10,22 @@ class PostsController < ApplicationController
   end
 
   def create
-    render json: params
-    # add_draft = post_params
-    # add_draft[:draft?] = (params[:commit] == "Save Draft")
-    # post = current_user.posts.build(add_draft)
-    # if post.save
-    #
-    #
-    #   flash[:notice] = "The post was successfully created!"
-    #   redirect_to root_path
-    # else
-    #   flash[:alert] = post.errors.full_messages.to_sentence
-    #   redirect_back(fallback_location: root_path)
-    # end
+    add_draft = post_params
+    add_draft[:draft?] = (params[:commit] == "Save Draft")
+    post = current_user.posts.build(add_draft)
+    if post.save
+      # save categories
+      last_post = Post.order(created_at: :desc).first
+      post_category_params[:category_id].each do |category_id|
+        last_post.post_categories.create(category_id: category_id)
+      end
+
+      flash[:notice] = "The post was successfully created!"
+      redirect_to root_path
+    else
+      flash[:alert] = post.errors.full_messages.to_sentence
+      redirect_back(fallback_location: root_path)
+    end
   end
 
   def edit
@@ -41,7 +44,7 @@ class PostsController < ApplicationController
   end
 
   def post_category_params
-    params.require(:post_category).permit(:category_id)
+    params.require(:post_category).permit(category_id: [])
   end
 
 end

@@ -35,7 +35,7 @@
     <%= label_tag "category", "Category" %>
     <% @categories.each do |category| %>
       <div class="form-check">
-        <%= check_box_tag "post_category[category_id]", category.id, false,
+        <%= check_box_tag "post_category[category_id][]", category.id, false,
          class: "form-check-input", id: "category-#{category.id}" %>
         <%= label_tag "category-#{category.id}", category.name, class: "form-check-label" %>
       </div>
