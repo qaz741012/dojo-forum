@@ -1,1 +1,11 @@
-Show
+<div>
+<%= @post.title %>
+<button>Collect</button>
+<button>Comment</button>
+</div>
+
+<div>
+  <h3><%= @post.user.name %></h3>
+  <%= image_tag @post.photo.url %>
+  <p><%= @post.content %></p>
+</div>
