@@ -15,13 +15,13 @@ class PostsController < ApplicationController
     post = current_user.posts.build(add_draft)
     if post.save
       # save categories
-      last_post = Post.order(created_at: :desc).first
+      # last_post = Post.order(created_at: :desc).first
       post_category_params[:category_id].each do |category_id|
-        last_post.post_categories.create(category_id: category_id)
+        post.post_categories.create(category_id: category_id)
       end
 
       flash[:notice] = "The post was successfully created!"
-      redirect_to root_path
+      redirect_to post_path(post)
     else
       flash[:alert] = post.errors.full_messages.to_sentence
       redirect_back(fallback_location: root_path)
@@ -40,7 +40,23 @@ class PostsController < ApplicationController
   end
 
   def update
-    #code
+    post = Post.find(params[:id])
+
+    add_draft = post_params
+    add_draft[:draft?] = (params[:commit] == "Save Draft")
+
+    if post.update(add_draft)
+      # save categories
+      post_category_params[:category_id].each do |category_id|
+        post.post_categories.create(category_id: category_id)
+      end
+
+      flash[:notice] = "The post was successfully created!"
+      redirect_to post_path(post)
+    else
+      flash[:alert] = post.errors.full_messages.to_sentence
+      redirect_back(fallback_location: root_path)
+    end
   end
 
   def destroy

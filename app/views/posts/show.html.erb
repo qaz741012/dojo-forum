@@ -2,6 +2,7 @@
 <%= @post.title %>
 <button>Collect</button>
 <a href="#comment-area"><button>Comment</button></a>
+<span class="badge badge-warning"><%= "draft: " + @post.draft?.to_s %></span>
 </div>
 
 <div>
