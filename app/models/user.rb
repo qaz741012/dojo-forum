@@ -15,4 +15,9 @@ class User < ApplicationRecord
 
   has_many :replies, dependent: :destroy
   has_many :replied_posts, through: :replies, source: :post
+
+  def admin?
+    self.role == "admin"
+  end
+
 end
