@@ -13,7 +13,7 @@ User.create( id: 1,
              email: "admin@example.com",
              password: "12345678",
              name: "Admin",
-             avatar: "http://www.lets-develop.com/wp-content/themes/olivias_theme/images/custom-avatar-admin.jpg",
+             remote_avatar_url: "http://www.lets-develop.com/wp-content/themes/olivias_theme/images/custom-avatar-admin.jpg",
              introduction: "Hi! I'm Admin.",
              role: "admin"
            )

@@ -10,7 +10,7 @@ namespace :dev do
                    email: FFaker::Name::first_name.downcase + "@example.com",
                    password: "123456",
                    name: FFaker::Name::first_name,
-                   avatar: "https://osclass.calinbehtuk.ro/oc-content/themes/vrisko/images/no_user.png",
+                   remote_avatar_url: "https://osclass.calinbehtuk.ro/oc-content/themes/vrisko/images/no_user.png",
                    introduction: FFaker::Lorem::sentence(30)
                  )
     end
@@ -25,7 +25,7 @@ namespace :dev do
         rand(4).times do |i|
           user.posts.create( title: FFaker::Music::album,
                              content: FFaker::Lorem::sentence(100),
-                             photo: "https://via.placeholder.com/400x300",
+                             remote_photo_url: "https://via.placeholder.com/400x300",
                              draft?: false
                            )
         end

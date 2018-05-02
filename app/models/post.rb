@@ -1,4 +1,6 @@
 class Post < ApplicationRecord
+  mount_uploader :photo, PhotoUploader
+
   validates :title, :content, :user_id, presence: true
 
   belongs_to :user
