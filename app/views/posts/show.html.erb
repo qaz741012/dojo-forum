@@ -1,7 +1,7 @@
 <div>
 <%= @post.title %>
 <button>Collect</button>
-<button>Comment</button>
+<a href="#comment-area"><button>Comment</button></a>
 </div>
 
 <div>
@@ -14,5 +14,13 @@
   <div>
     <h3><%= reply.user.name %></h3>
     <p><%= reply.comment %></p>
+  </div>
+<% end %>
+
+<%= form_for [@post, Reply.new] do |f| %>
+  <div class="form-group" id="comment-area">
+    <%= f.text_area :comment, placeholder: "Add comment", class: "form-control" %>
+    <br>
+    <%= f.submit "Submit", class: "btn btn-primary" %>
   </div>
 <% end %>
