@@ -5,6 +5,6 @@ Rails.application.routes.draw do
   root "posts#index"
 
   resources :posts do
-    resources :replies, except: [:index]
+    resources :replies, except: [:index, :new, :show]
   end
 end

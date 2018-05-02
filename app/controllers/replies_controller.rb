@@ -13,6 +13,25 @@ class RepliesController < ApplicationController
     redirect_back(fallback_location: root_path)
   end
 
+  def edit
+    @reply = Reply.find(params[:id])
+  end
+
+  def update
+    reply = Reply.find(params[:id])
+    if reply.update(reply_params)
+      flash[:notice] = "Comment was successfully updated."
+      redirect_to post_path(reply.post)
+    else
+      flash[:alert] = reply.errors.full_messages.to_sentence
+      redirect_back(fallback_location: root_path)
+    end
+
+  end
+
+  def destroy
+    #code
+  end
 
   private
 
