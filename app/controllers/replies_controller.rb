@@ -30,7 +30,10 @@ class RepliesController < ApplicationController
   end
 
   def destroy
-    #code
+    reply = Reply.find(params[:id])
+    reply.destroy
+    flash[:notice] = "Comment was successfully deleted."
+    redirect_back(fallback_location: root_path)
   end
 
   private
