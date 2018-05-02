@@ -9,3 +9,10 @@
   <%= image_tag @post.photo.url %>
   <p><%= @post.content %></p>
 </div>
+
+<% @replies.each do |reply| %>
+  <div>
+    <h3><%= reply.user.name %></h3>
+    <p><%= reply.comment %></p>
+  </div>
+<% end %>
