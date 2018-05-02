@@ -7,4 +7,6 @@ Rails.application.routes.draw do
   resources :posts do
     resources :replies, except: [:index, :new, :show]
   end
+
+  resources :users, only: [:show, :edit, :update]
 end

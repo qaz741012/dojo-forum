@@ -1,0 +1,71 @@
+<div>
+  <%= image_tag @user.avatar.url if @user.avatar? %>
+  <p><%= @user.introduction %></p>
+  <%= link_to "Edit", edit_user_path(@user), class: "btn btn-secondary" %>
+</div>
+
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link active" href="#">My Post</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">My Comment</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">My Collect</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">My Draft</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">My Friend</a>
+  </li>
+</ul>
+
+<div>
+  <h3>My Post</h3>
+  <table class="table table-hover">
+    <% @posts.each do |post| %>
+      <tr>
+        <td><%= link_to post.title, post_path(post) %></td>
+        <td><%= post.created_at.strftime("%Y-%m-%d") %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>
+
+<div>
+  <h3>My Comment</h3>
+  <% @replies.each do |reply| %>
+    <%= link_to reply.post.title, post_path(reply.post) %>
+    <p><%= reply.comment %></p>
+    <%= link_to "Edit", edit_post_reply_path(reply.post, reply), class: "btn btn-secondary" %>
+    <%= link_to "Delete", post_reply_path(reply.post, reply), method: :delete,
+    class: "btn btn-danger", data: { confirm: "Are you sure?" } %>
+    <hr>
+  <% end %>
+</div>
+
+<div>
+  <h3>My Collect</h3>
+</div>
+
+<div>
+  <h3>My Draft</h3>
+  <table class="table table-hover">
+    <% @drafts.each do |draft| %>
+      <tr>
+        <td><%= link_to draft.title, post_path(draft) %></td>
+        <td><%= draft.created_at.strftime("%Y-%m-%d") %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>
+
+<div>
+  <h3>My Friend</h3>
+</div>
+
+<div>
+  <%= link_to "New Post", new_post_path, class: "btn btn-secondary" %>
+</div>
