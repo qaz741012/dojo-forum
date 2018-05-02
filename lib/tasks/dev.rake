@@ -22,7 +22,7 @@ namespace :dev do
 
     User.find_each do |user|
       if user.role != "admin"
-        rand(4).times do |i|
+        rand(5).times do |i|
           user.posts.create( title: FFaker::Music::album,
                              content: FFaker::Lorem::sentence(100),
                              remote_photo_url: "https://via.placeholder.com/400x300",
@@ -32,5 +32,16 @@ namespace :dev do
       end
     end
     puts "#{Post.count} fake posts were created."
+  end
+
+  task fake_post_category: :environment do
+    categories = Category.all
+
+    Post.find_each do |post|
+      categories.sample(rand(1..4)).each do |category|
+        post.post_categories.create(category_id: category.id)
+      end
+    end
+    puts "Finished relationships between post and category."
   end
 end
