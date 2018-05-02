@@ -5,8 +5,14 @@
 </div>
 
 <div>
+  <% @categories.each do |category| %>
+    <span class="badge badge-secondary"><%= category.name %></span>
+  <% end %>
+</div>
+
+<div>
   <h3><%= @post.user.name %></h3>
-  <%= image_tag @post.photo.url %>
+  <%= image_tag @post.photo.url if @post.photo? %>
   <p><%= @post.content %></p>
   <%= link_to "Edit", edit_post_path(@post), class: "btn btn-secondary" %>
   <%= link_to "Delete", post_path(@post), method: :delete,

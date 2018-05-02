@@ -31,10 +31,12 @@ class PostsController < ApplicationController
   def show
     @post = Post.find(params[:id])
     @replies = @post.replies
+    @categories = @post.categories
   end
 
   def edit
-    #code
+    @categories = Category.all
+    @post = Post.find(params[:id])
   end
 
   def update

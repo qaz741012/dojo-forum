@@ -1,15 +1,16 @@
 <%= form_tag post_path, method: :patch do %>
   <div calss="form-group">
-    <%= text_field_tag "post[title]", nil, placeholder: "Title", class: "form-control" %>
+    <%= text_field_tag "post[title]", @post.title, placeholder: "Title", class: "form-control" %>
   </div>
   <br>
 
   <div calss="form-group">
-    <%= text_area_tag "post[content]", nil, placeholder: "Write something...", class: "form-control", rows: 8 %>
+    <%= text_area_tag "post[content]", @post.content, placeholder: "Write something...", class: "form-control", rows: 8 %>
   </div>
   <br>
 
   <div calss="form-group">
+    <%= image_tag @post.photo.url if @post.photo? %>
     <%= file_field_tag "post[photo]" %>
   </div>
   <br>
@@ -17,15 +18,15 @@
   <div calss="form-group">
     <%= label_tag "auth", "Who can see" %>
     <div class="form-check">
-      <%= radio_button_tag "post[auth]", "public", true, id: "auth-public" %>
+      <%= radio_button_tag "post[auth]", "public", @post.auth == "public", id: "auth-public" %>
       <%= label_tag "auth-public", "All", class: "form-check-label" %>
     </div>
     <div class="form-check">
-      <%= radio_button_tag "post[auth]", "friend", false, id: "auth-friend" %>
+      <%= radio_button_tag "post[auth]", "friend", @post.auth == "friend", id: "auth-friend" %>
       <%= label_tag "auth-friend", "Friend", class: "form-check-label" %>
     </div>
     <div class="form-check">
-      <%= radio_button_tag "post[auth]", "self", false, id: "auth-self" %>
+      <%= radio_button_tag "post[auth]", "self", @post.auth == "self", id: "auth-self" %>
       <%= label_tag "auth-self", "Myself", class: "form-check-label" %>
     </div>
   </div>
@@ -35,7 +36,7 @@
     <%= label_tag "category", "Category" %>
     <% @categories.each do |category| %>
       <div class="form-check">
-        <%= check_box_tag "post_category[category_id][]", category.id, false,
+        <%= check_box_tag "post_category[category_id][]", category.id, @post.categories.include?(category),
          class: "form-check-input", id: "category-#{category.id}" %>
         <%= label_tag "category-#{category.id}", category.name, class: "form-check-label" %>
       </div>
