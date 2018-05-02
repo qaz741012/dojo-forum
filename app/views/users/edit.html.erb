@@ -1,1 +1,12 @@
-user edit
+<%= form_for @user do |f| %>
+  <div class="form-group">
+    <%= f.text_field :name, class: "form-control" %>
+
+    <%= f.text_area :introduction, class: "form-control" %>
+
+    <%= image_tag @user.avatar.url if @user.avatar? %>
+    <%= f.file_field :avatar %>
+
+    <%= f.submit "Submit", class: "btn btn-secondary" %>
+  </div>
+<% end %>
