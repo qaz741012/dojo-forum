@@ -3,7 +3,7 @@
     <tr>
       <th>Name</th>
       <th>Email</th>
-      <th>Role</th>
+      <th colspan="2">Role</th>
     </tr>
   </thead>
   <tbody>
@@ -12,6 +12,14 @@
         <td><%= user.name %></td>
         <td><%= user.email %></td>
         <td><%= user.role %></td>
+        <td>
+          <%= form_for [:admin, user] do |f| %>
+            <div class="form-group">
+              <%= f.select :role, { "Admin" => "admin", "Normal" => "normal" }, class: "form-control" %>
+              <%= f.submit "Update", class: "btn btn-primary" %>
+            </div>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>
