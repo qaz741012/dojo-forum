@@ -1,9 +1,19 @@
+<ul class="nav nav-pills">
+  <li class="nav-item">
+    <a class="nav-link" href="<%= admin_categories_path %>">Category List</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link active" href="<%= admin_root_path %>">User List</a>
+  </li>
+</ul>
+<br>
+
 <table class="table table-hover">
   <thead class="thead-light">
     <tr>
       <th>Name</th>
       <th>Email</th>
-      <th colspan="2">Role</th>
+      <th>Role</th>
     </tr>
   </thead>
   <tbody>
@@ -11,7 +21,6 @@
       <tr>
         <td><%= user.name %></td>
         <td><%= user.email %></td>
-        <td><%= user.role %></td>
         <td>
           <%= form_for [:admin, user] do |f| %>
             <div class="form-group">
