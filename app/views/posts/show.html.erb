@@ -16,19 +16,23 @@
   <%= image_tag @post.user.avatar.url if @post.user.avatar? %>
   <%= image_tag @post.photo.url if @post.photo? %>
   <p><%= @post.content %></p>
-  <%= link_to "Edit", edit_post_path(@post), class: "btn btn-secondary" %>
-  <%= link_to "Delete", post_path(@post), method: :delete,
-  class: "btn btn-danger", data: { confirm: "Are you sure?" } %>
+  <% if current_user.admin? || @post.user == current_user %>
+    <%= link_to "Edit", edit_post_path(@post), class: "btn btn-secondary" %>
+    <%= link_to "Delete", post_path(@post), method: :delete,
+    class: "btn btn-danger", data: { confirm: "Are you sure?" } %>
+  <% end %>
 </div>
 
-<% @replies.each do |reply| %>
+<% @post.replies.each do |reply| %>
   <div>
     <h3><%= reply.user.name %></h3>
-    <%= image_tag reply.user.avatar.url if @post.user.avatar? %>
+    <%= image_tag reply.user.avatar.url if reply.user.avatar? %>
     <p><%= reply.comment %></p>
-    <%= link_to "Edit", edit_post_reply_path(@post, reply), class: "btn btn-secondary" %>
-    <%= link_to "Delete", post_reply_path(@post, reply), method: :delete,
-    class: "btn btn-danger", data: { confirm: "Are you sure?" } %>
+    <% if current_user.admin? || reply.user == current_user %>
+      <%= link_to "Edit", edit_post_reply_path(@post, reply), class: "btn btn-secondary" %>
+      <%= link_to "Delete", post_reply_path(@post, reply), method: :delete,
+      class: "btn btn-danger", data: { confirm: "Are you sure?" } %>
+    <% end %>
   </div>
   <hr>
 <% end %>

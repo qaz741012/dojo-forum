@@ -15,7 +15,6 @@ class PostsController < ApplicationController
     post = current_user.posts.build(add_draft)
     if post.save
       # save categories
-      # last_post = Post.order(created_at: :desc).first
       post_category_params[:category_id].each do |category_id|
         post.post_categories.create(category_id: category_id)
       end
@@ -29,8 +28,7 @@ class PostsController < ApplicationController
   end
 
   def show
-    @post = Post.find(params[:id])
-    @replies = @post.replies
+    @post = Post.includes(replies: :user).find(params[:id])
     @categories = @post.categories
   end
 
