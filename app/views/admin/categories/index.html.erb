@@ -11,7 +11,11 @@
 <%= form_for [:admin, @category] do |f| %>
   <div class="form-inline">
     <%= f.text_field :name, placeholder: "Category Name", class: "form-control mr-2" %>
-    <%= f.submit %>
+    <% if @category.name? %>
+      <%= f.submit "Update", class: "btn" %>
+    <% else %>
+      <%= f.submit "Create", class: "btn" %>
+    <% end %>
   </div>
 <% end %>
 <br>
@@ -28,7 +32,9 @@
       <tr>
         <td><%= category.name %></td>
         <td>
-          123
+          <%= link_to "Edit", admin_categories_path(id: category.id), class: "btn btn-secondary" %>
+          <%= link_to "Delete", admin_category_path(category), method: :delete,
+          data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
         </td>
       </tr>
     <% end %>
