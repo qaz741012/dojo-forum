@@ -1,10 +1,11 @@
 <ul class="nav nav-pills category-navs">
   <li class="nav-item">
-    <a class="nav-link active" href="<%= root_path %>">All</a>
+    <a class="nav-link <%= "active" if !@category %>" href="<%= root_path %>">All</a>
   </li>
   <% @categories.each do |category| %>
     <li class="nav-item">
-      <%= link_to category.name, "#", class: "nav-link" %>
+      <%= link_to category.name, root_path(category_id: category.id),
+      class: "nav-link #{'active' if @category == category}" %>
     </li>
   <% end %>
 </ul>
