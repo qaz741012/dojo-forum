@@ -18,9 +18,7 @@
       <% end %>
     </div>
   </div>
-  <div style="height: 150px;"></div>
-
-  <div class="row">
+  <div class="row mt-5 mx-4">
     <div class="col-md-2">
       <div class="w-100 m-auto">
         <%= image_tag @post.user.avatar.url, class: "mw-100" if @post.user.avatar? %>
@@ -32,7 +30,7 @@
       <div class="mb-4" style="max-width: 500px; max-height: 400px;">
         <%= image_tag @post.photo.url, class: "mw-100" if @post.photo? %>
       </div>
-      <div>
+      <div class="px-2">
         <p><%= @post.content %></p>
       </div>
     </div>
@@ -54,7 +52,7 @@
 </div>
 
 <% @post.replies.each do |reply| %>
-  <div class="row mb-3">
+  <div class="row mb-3 mx-4">
     <div class="col-md-2">
       <div class="w-100 m-auto">
         <%= image_tag reply.user.avatar.url, class: "mw-100" if reply.user.avatar? %>
@@ -63,7 +61,7 @@
       <a href="#" class="btn btn-secondary d-block mt-3">Add Friend</a>
     </div>
     <div class="offset-md-1 col-md-9">
-      <div>
+      <div class="px-2">
         <p><%= reply.comment %></p>
       </div>
     </div>
@@ -84,11 +82,11 @@
   <div style="height: 1px; clear: both;" class="bg-secondary my-4"></div>
 <% end %>
 
-<div class="mt-5">
+<div class="mt-5 mx-4">
   <%= form_for [@post, Reply.new] do |f| %>
     <div class="form-group" id="comment-area">
       <%= f.text_area :comment, placeholder: "Add comment", class: "form-control", rows: 5 %>
-      <%= f.submit "Submit", class: "btn btn-primary float-right mt-2" %>
+      <%= f.submit "Submit", class: "btn btn-primary float-right mt-3" %>
     </div>
   <% end %>
 </div>

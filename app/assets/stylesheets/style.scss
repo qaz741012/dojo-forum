@@ -9,10 +9,6 @@
 // ========== Post Show ==========
 .post-title {
   background-color: #CDCDCD;
-  position: absolute;
-  left: 0;
-  right: 0;
-  margin-top: -31px;
 }
 
 .post-edit {
@@ -22,6 +18,14 @@
 }
 
 // ========== Post Index ==========
+.site-name {
+  background-color: #DEDEDE;
+}
+
+.site-name h1 {
+  font-weight: 600;
+}
+
 .category-navs li {
   margin-right: 5px;
 }
