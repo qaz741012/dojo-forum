@@ -1,7 +1,13 @@
-<div>
-  <%= image_tag @user.avatar.url if @user.avatar? %>
-  <p><%= @user.introduction %></p>
-  <%= link_to "Edit", edit_user_path(@user), class: "btn btn-secondary" %>
+<div class="row">
+  <div class="col-md-2">
+    <%= image_tag @user.avatar.url, class: "mw-100" if @user.avatar? %>
+  </div>
+  <div class="offset-md-1 col-md-9">
+    <p><%= @user.introduction %></p>
+  </div>
+  <div class="w-100 text-right">
+    <%= link_to "Edit", edit_user_path(@user), class: "btn btn-secondary" %>
+  </div>
 </div>
 
 <ul class="nav nav-tabs">
