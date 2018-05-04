@@ -1,10 +1,10 @@
-<ul class="nav nav-pills">
+<ul class="nav nav-pills category-navs">
   <li class="nav-item">
-    <a class="nav-link active category-navs" href="<%= root_path %>">All</a>
+    <a class="nav-link active" href="<%= root_path %>">All</a>
   </li>
   <% @categories.each do |category| %>
     <li class="nav-item">
-      <%= link_to category.name, "#", class: "nav-link category-navs" %>
+      <%= link_to category.name, "#", class: "nav-link" %>
     </li>
   <% end %>
 </ul>

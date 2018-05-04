@@ -1,3 +1,5 @@
+// ========== Basic Settings ==========
+
 // ========== Post Show ==========
 .post-title {
   background-color: #CDCDCD;
@@ -14,6 +16,16 @@
 }
 
 // ========== Post Index ==========
-.category-navs {
-  
+.category-navs li {
+  margin-right: 5px;
+}
+
+.category-navs li a {
+  color: #9A9A9A;
+  border: 1px solid #9A9A9A;
+}
+
+.category-navs li a.active.nav-link, .category-navs li a:hover {
+  color: white;
+  background-color: #9A9A9A;
 }
