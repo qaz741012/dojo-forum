@@ -2,8 +2,14 @@
   <div class="post-title mb-3 p-3">
     <h2 class="d-inline-block"><%= @post.title %></h2>
     <div class="d-inline-block float-right">
-      <button>Collect</button>
-      <a href="#comment-area"><button>Comment</button></a>
+      <% if current_user.collected_post?(@post) %>
+        <%= link_to "Uncollect", uncollect_post_path(@post), method: :post,
+        class: "btn btn-secondary" %>
+      <% else %>
+        <%= link_to "Collect", collect_post_path(@post), method: :post,
+        class: "btn btn-secondary" %>
+      <% end %>
+      <%= link_to "Comment", "#comment-area", class: "btn btn-secondary" %>
       <span class="badge badge-warning"><%= "draft: " + @post.draft?.to_s %></span>
     </div>
     <div>

@@ -5,6 +5,11 @@ Rails.application.routes.draw do
   root "posts#index"
 
   resources :posts do
+    member do
+      post :collect
+      post :uncollect
+    end
+
     resources :replies, except: [:index, :new, :show]
   end
 

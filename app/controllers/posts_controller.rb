@@ -71,6 +71,27 @@ class PostsController < ApplicationController
     redirect_to root_path
   end
 
+  def collect
+    collect = current_user.collects.build(post_id: params[:id])
+    if collect.save
+      flash[:notice] = "The post was successfully collected."
+    else
+      flash[:alert] = collect.errors.full_messages.to_sentence
+    end
+    redirect_back(fallback_location: root_path)
+  end
+
+  def uncollect
+    uncollect = current_user.collects.find_by_post_id(params[:id])
+    if uncollect
+      uncollect.destroy
+      flash[:notice] = "The post was successfully uncollected."
+    else
+      flash[:alert] = "The post was haven't been collected."
+    end
+    redirect_back(fallback_location: root_path)
+  end
+
   private
 
   def post_params

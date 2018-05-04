@@ -20,4 +20,8 @@ class User < ApplicationRecord
     self.role == "admin"
   end
 
+  def collected_post?(post)
+    self.collected_posts.include?(post)
+  end
+
 end
