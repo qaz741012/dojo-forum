@@ -34,9 +34,13 @@
   <div class="position-relative mt-4">
     <div class="post-edit">
       <% if current_user.admin? || @post.user == current_user %>
-        <%= link_to "Edit", edit_post_path(@post), class: "btn btn-secondary" %>
-        <%= link_to "Delete", post_path(@post), method: :delete,
-        class: "btn btn-danger", data: { confirm: "Are you sure?" } %>
+        <%= link_to edit_post_path(@post), class: "btn btn-light" do %>
+          <%= icon("far", "edit") %>
+        <% end %>
+        <%= link_to post_path(@post), method: :delete,
+        class: "btn btn-light", data: { confirm: "Are you sure?" } do %>
+          <%= icon("fas", "times") %>
+        <% end %>
       <% end %>
     </div>
   </div>
@@ -61,9 +65,13 @@
   <div class="position-relative">
     <div class="post-edit">
       <% if current_user.admin? || reply.user == current_user %>
-        <%= link_to "Edit", edit_post_reply_path(@post, reply), class: "btn btn-secondary" %>
-        <%= link_to "Delete", post_reply_path(@post, reply), method: :delete,
-        class: "btn btn-danger", data: { confirm: "Are you sure?" } %>
+        <%= link_to edit_post_reply_path(@post, reply), class: "btn btn-light" do %>
+          <%= icon("far", "edit") %>
+        <% end %>
+        <%= link_to post_reply_path(@post, reply), method: :delete,
+        class: "btn btn-light", data: { confirm: "Are you sure?" } do %>
+          <%= icon("fas", "times") %>
+        <% end %>
       <% end %>
     </div>
   </div>

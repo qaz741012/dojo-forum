@@ -22,9 +22,10 @@
         <td><%= user.email %></td>
         <td>
           <%= form_for [:admin, user] do |f| %>
-            <div class="form-group">
-              <%= f.select :role, { "Admin" => "admin", "Normal" => "normal" }, class: "form-control" %>
-              <%= f.submit "Update", class: "btn btn-primary" %>
+            <div class="form-group input-group">
+              <%= f.select :role, { "Admin" => "admin", "Normal" => "normal" },
+              { include_blank: false }, class: "form-control custom-select" %>
+              <%= f.submit "Update", class: "btn btn-secondary ml-2" %>
             </div>
           <% end %>
         </td>

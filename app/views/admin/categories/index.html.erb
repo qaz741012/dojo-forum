@@ -32,9 +32,13 @@
       <tr>
         <td><%= category.name %></td>
         <td>
-          <%= link_to "Edit", admin_categories_path(id: category.id), class: "btn btn-secondary" %>
-          <%= link_to "Delete", admin_category_path(category), method: :delete,
-          data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
+          <%= link_to admin_categories_path(id: category.id), class: "btn btn-light" do %>
+            <%= icon("far", "edit") %>
+          <% end %>
+          <%= link_to admin_category_path(category), method: :delete,
+          data: { confirm: "Are you sure?" }, class: "btn btn-light" do %>
+            <%= icon("fas", "times") %>
+          <% end %>
         </td>
       </tr>
     <% end %>

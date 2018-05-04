@@ -39,9 +39,13 @@
   <% @replies.each do |reply| %>
     <%= link_to reply.post.title, post_path(reply.post) %>
     <p><%= reply.comment %></p>
-    <%= link_to "Edit", edit_post_reply_path(reply.post, reply), class: "btn btn-secondary" %>
-    <%= link_to "Delete", post_reply_path(reply.post, reply), method: :delete,
-    class: "btn btn-danger", data: { confirm: "Are you sure?" } %>
+    <%= link_to edit_post_reply_path(reply.post, reply), class: "btn btn-light" do %>
+      <%= icon("far", "edit") %>
+    <% end %>
+    <%= link_to post_reply_path(reply.post, reply), method: :delete,
+    class: "btn btn-light", data: { confirm: "Are you sure?" } do %>
+      <%= icon("fas", "times") %>
+    <% end %>
     <hr>
   <% end %>
 </div>
