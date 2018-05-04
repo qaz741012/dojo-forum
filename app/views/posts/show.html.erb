@@ -1,46 +1,80 @@
 <div>
-<%= @post.title %>
-<button>Collect</button>
-<a href="#comment-area"><button>Comment</button></a>
-<span class="badge badge-warning"><%= "draft: " + @post.draft?.to_s %></span>
-</div>
+  <div class="post-title mb-3 p-3">
+    <h2 class="d-inline-block"><%= @post.title %></h2>
+    <div class="d-inline-block float-right">
+      <button>Collect</button>
+      <a href="#comment-area"><button>Comment</button></a>
+      <span class="badge badge-warning"><%= "draft: " + @post.draft?.to_s %></span>
+    </div>
+    <div>
+      <% @categories.each do |category| %>
+        <span class="badge badge-secondary"><%= category.name %></span>
+      <% end %>
+    </div>
+  </div>
+  <div style="height: 150px;"></div>
 
-<div>
-  <% @categories.each do |category| %>
-    <span class="badge badge-secondary"><%= category.name %></span>
-  <% end %>
-</div>
-
-<div>
-  <h3><%= @post.user.name %></h3>
-  <%= image_tag @post.user.avatar.url if @post.user.avatar? %>
-  <%= image_tag @post.photo.url if @post.photo? %>
-  <p><%= @post.content %></p>
-  <% if current_user.admin? || @post.user == current_user %>
-    <%= link_to "Edit", edit_post_path(@post), class: "btn btn-secondary" %>
-    <%= link_to "Delete", post_path(@post), method: :delete,
-    class: "btn btn-danger", data: { confirm: "Are you sure?" } %>
-  <% end %>
+  <div class="row">
+    <div class="col-md-2">
+      <div class="w-100 m-auto">
+        <%= image_tag @post.user.avatar.url, class: "mw-100" if @post.user.avatar? %>
+      </div>
+      <h3 class="mx-auto mt-1 text-center"><%= @post.user.name %></h3>
+      <a href="#" class="btn btn-secondary d-block mt-3">Add Friend</a>
+    </div>
+    <div class="offset-md-1 col-md-9 position-relative">
+      <div class="mb-4" style="max-width: 500px; max-height: 400px;">
+        <%= image_tag @post.photo.url, class: "mw-100" if @post.photo? %>
+      </div>
+      <div>
+        <p><%= @post.content %></p>
+      </div>
+    </div>
+  </div>
+  <div class="position-relative mt-4">
+    <div class="post-edit">
+      <% if current_user.admin? || @post.user == current_user %>
+        <%= link_to "Edit", edit_post_path(@post), class: "btn btn-secondary" %>
+        <%= link_to "Delete", post_path(@post), method: :delete,
+        class: "btn btn-danger", data: { confirm: "Are you sure?" } %>
+      <% end %>
+    </div>
+  </div>
+  <div style="height: 1px; clear: both;" class="bg-secondary my-5"></div>
 </div>
 
 <% @post.replies.each do |reply| %>
-  <div>
-    <h3><%= reply.user.name %></h3>
-    <%= image_tag reply.user.avatar.url if reply.user.avatar? %>
-    <p><%= reply.comment %></p>
-    <% if current_user.admin? || reply.user == current_user %>
-      <%= link_to "Edit", edit_post_reply_path(@post, reply), class: "btn btn-secondary" %>
-      <%= link_to "Delete", post_reply_path(@post, reply), method: :delete,
-      class: "btn btn-danger", data: { confirm: "Are you sure?" } %>
-    <% end %>
+  <div class="row mb-3">
+    <div class="col-md-2">
+      <div class="w-100 m-auto">
+        <%= image_tag reply.user.avatar.url, class: "mw-100" if reply.user.avatar? %>
+      </div>
+      <h3 class="mx-auto mt-1 text-center"><%= reply.user.name %></h3>
+      <a href="#" class="btn btn-secondary d-block mt-3">Add Friend</a>
+    </div>
+    <div class="offset-md-1 col-md-9">
+      <div>
+        <p><%= reply.comment %></p>
+      </div>
+    </div>
   </div>
-  <hr>
+  <div class="position-relative">
+    <div class="post-edit">
+      <% if current_user.admin? || reply.user == current_user %>
+        <%= link_to "Edit", edit_post_reply_path(@post, reply), class: "btn btn-secondary" %>
+        <%= link_to "Delete", post_reply_path(@post, reply), method: :delete,
+        class: "btn btn-danger", data: { confirm: "Are you sure?" } %>
+      <% end %>
+    </div>
+  </div>
+  <div style="height: 1px; clear: both;" class="bg-secondary my-4"></div>
 <% end %>
 
-<%= form_for [@post, Reply.new] do |f| %>
-  <div class="form-group" id="comment-area">
-    <%= f.text_area :comment, placeholder: "Add comment", class: "form-control" %>
-    <br>
-    <%= f.submit "Submit", class: "btn btn-primary" %>
-  </div>
-<% end %>
+<div class="mt-5">
+  <%= form_for [@post, Reply.new] do |f| %>
+    <div class="form-group" id="comment-area">
+      <%= f.text_area :comment, placeholder: "Add comment", class: "form-control", rows: 5 %>
+      <%= f.submit "Submit", class: "btn btn-primary float-right mt-2" %>
+    </div>
+  <% end %>
+</div>
