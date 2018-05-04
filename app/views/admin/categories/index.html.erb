@@ -6,19 +6,19 @@
     <a class="nav-link" href="<%= admin_root_path %>">User List</a>
   </li>
 </ul>
-<br>
 
-<%= form_for [:admin, @category] do |f| %>
-  <div class="form-inline">
-    <%= f.text_field :name, placeholder: "Category Name", class: "form-control mr-2" %>
-    <% if @category.name? %>
-      <%= f.submit "Update", class: "btn" %>
-    <% else %>
-      <%= f.submit "Create", class: "btn" %>
-    <% end %>
-  </div>
-<% end %>
-<br>
+<div class="my-3">
+  <%= form_for [:admin, @category] do |f| %>
+    <div class="form-inline">
+      <%= f.text_field :name, placeholder: "Category Name", class: "form-control mr-2" %>
+      <% if @category.name? %>
+        <%= f.submit "Update", class: "btn" %>
+      <% else %>
+        <%= f.submit "Create", class: "btn" %>
+      <% end %>
+    </div>
+  <% end %>
+</div>
 
 <table class="table table-hover">
   <thead class="thead-light">

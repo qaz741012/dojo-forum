@@ -1,4 +1,15 @@
-<table class="table table-hover table-sm">
+<ul class="nav nav-pills">
+  <li class="nav-item">
+    <a class="nav-link active category-navs" href="<%= root_path %>">All</a>
+  </li>
+  <% @categories.each do |category| %>
+    <li class="nav-item">
+      <%= link_to category.name, "#", class: "nav-link category-navs" %>
+    </li>
+  <% end %>
+</ul>
+
+<table class="table table-hover table-sm mt-3">
   <thead class="thead-light">
     <tr>
       <th>Replies count</th>
@@ -20,6 +31,6 @@
   </tbody>
 </table>
 
-<div class="mt-5 text-center">
+<div class="text-center" style="margin-top: 100px;">
   <%= paginate @posts, window: 2 %>
 </div>
