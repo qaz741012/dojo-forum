@@ -20,6 +20,8 @@ Rails.application.routes.draw do
       get :my_collect
       get :my_draft
       get :my_friend
+      post :add_friend
+      post :confirm_friend
     end
   end
 

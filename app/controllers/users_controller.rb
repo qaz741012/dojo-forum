@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user
-  before_action :profile_status, except: [:edit, :update, :my_post]
+  before_action :profile_status, only: [:my_comment, :my_collect, :my_draft, :my_friend]
 
   def edit
     if @user != current_user
@@ -38,6 +38,25 @@ class UsersController < ApplicationController
   end
 
   def my_friend
+    #code
+  end
+
+  def add_friend
+    if current_user != @user
+      friendship = current_user.friendships.build( friend_id: params[:id],
+                                                   status: "request" )
+      if friendship.save
+        flash[:notice] = "Successfully sent request."
+      else
+        flash[:alert] = friendship.errors.full_messages.to_sentence
+      end
+    else
+      flash[:alert] = "Can't send request to yourself."
+    end
+    redirect_back(fallback_location: root_path)
+  end
+
+  def confirm_friend
     #code
   end
 

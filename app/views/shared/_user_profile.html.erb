@@ -12,6 +12,8 @@
     <div class="w-100 text-right">
       <% if current_user == user %>
         <%= link_to "Edit", edit_user_path(user), class: "btn btn-secondary" %>
+      <% else %>
+        <%= render partial: "shared/add_friend", locals: { user: user } %>
       <% end %>
     </div>
   </div>
