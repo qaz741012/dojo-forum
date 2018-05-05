@@ -16,6 +16,12 @@ class User < ApplicationRecord
   has_many :replies, dependent: :destroy
   has_many :replied_posts, through: :replies, source: :post
 
+  has_many :friendships, dependent: :destroy
+  has_many :friends, through: :friendships
+
+  has_many :inverse_friendships, class_name: "Friendship", foreign_key: "friend_id", dependent: :destroy
+  has_many :request_friends, through: :inverse_friendships, source: :user
+
   def admin?
     self.role == "admin"
   end
