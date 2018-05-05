@@ -35,7 +35,7 @@ class UsersController < ApplicationController
   end
 
   def my_collect
-    #code
+    @collects = Collect.includes(:post).where(user_id: @user.id)
   end
 
   def my_draft

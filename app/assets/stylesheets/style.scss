@@ -61,11 +61,13 @@
 }
 
 .user-profile-post,
-.user-profile-comment {
+.user-profile-comment,
+.user-profile-collect {
   background-color: #DEDEDE;
 }
 
-.user-profile-comment > div:nth-child(even) {
+.user-profile-comment > div:nth-child(even),
+.user-profile-collect > div:nth-child(even) {
   height: 2px;
   background: #ABABAB;
   position: absolute;

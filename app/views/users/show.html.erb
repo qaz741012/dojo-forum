@@ -1,24 +1,4 @@
 <div>
-  <h3>My Comment</h3>
-  <% @replies.each do |reply| %>
-    <%= link_to reply.post.title, post_path(reply.post) %>
-    <p><%= reply.comment %></p>
-    <%= link_to edit_post_reply_path(reply.post, reply), class: "btn btn-light" do %>
-      <%= icon("far", "edit") %>
-    <% end %>
-    <%= link_to post_reply_path(reply.post, reply), method: :delete,
-    class: "btn btn-light", data: { confirm: "Are you sure?" } do %>
-      <%= icon("fas", "times") %>
-    <% end %>
-    <hr>
-  <% end %>
-</div>
-
-<div>
-  <h3>My Collect</h3>
-</div>
-
-<div>
   <h3>My Draft</h3>
   <table class="table table-hover">
     <% @drafts.each do |draft| %>
@@ -32,8 +12,4 @@
 
 <div>
   <h3>My Friend</h3>
-</div>
-
-<div>
-  <%= link_to "New Post", new_post_path, class: "btn btn-secondary" %>
 </div>
