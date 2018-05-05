@@ -60,6 +60,27 @@
   border-bottom: none;
 }
 
-.user-profile-post {
+.user-profile-post,
+.user-profile-comment {
   background-color: #DEDEDE;
+}
+
+.user-profile-comment > div:nth-child(even) {
+  height: 2px;
+  background: #ABABAB;
+  position: absolute;
+  left: 0;
+  right: 0;
+}
+
+.user-profile-comment-content {
+  border: 2px solid #ABABAB;
+  border-radius: 5px;
+  background-color: #FFF;
+}
+
+.user-profile-comment .edit {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
 }

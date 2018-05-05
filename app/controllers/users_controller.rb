@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   before_action :profile_status, except: [:edit, :update, :my_post]
 
   def show
-    @replies = @user.replies
+
     @drafts = @user.posts.where(draft?: true)
   end
 
@@ -31,7 +31,7 @@ class UsersController < ApplicationController
   end
 
   def my_comment
-    #code
+    @replies = Reply.includes(:post).where(user_id: @user.id)
   end
 
   def my_collect

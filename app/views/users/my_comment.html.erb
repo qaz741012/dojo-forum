@@ -1,1 +1,28 @@
 <%= render partial: "shared/user_profile", locals: { user: @user } %>
+
+<div class="user-profile-comment px-5 pt-4 position-relative">
+  <% @replies.each do |reply| %>
+    <div class="row mt-3">
+      <div class="col-md-8">
+        <h4>
+          <%= link_to reply.post.title, post_path(reply.post) %>
+        </h4>
+        <div class="user-profile-comment-content mb-3">
+          <p class="py-3 px-2"><%= reply.comment %></p>
+        </div>
+      </div>
+      <div class="col-md-4 position-relative">
+        <div class="edit">
+          <%= link_to edit_post_reply_path(reply.post, reply), class: "btn btn-light" do %>
+            <%= icon("far", "edit") %>
+          <% end %>
+          <%= link_to post_reply_path(reply.post, reply), method: :delete,
+          class: "btn btn-light", data: { confirm: "Are you sure?" } do %>
+            <%= icon("fas", "times") %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div></div>
+  <% end %>
+</div>
