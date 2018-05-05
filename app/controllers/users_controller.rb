@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
   before_action :set_user
+  before_action :profile_status, except: [:edit, :update, :my_post]
 
   def show
-    @posts = @user.posts.where(draft?: false)
     @replies = @user.replies
     @drafts = @user.posts.where(draft?: true)
   end
@@ -27,7 +27,7 @@ class UsersController < ApplicationController
   end
 
   def my_post
-    #code
+    @posts = @user.posts.where(draft?: false)
   end
 
   def my_comment
@@ -54,6 +54,10 @@ class UsersController < ApplicationController
 
   def set_user
     @user = User.find(params[:id])
+  end
+
+  def profile_status
+    @status = params[:status]
   end
 
 end

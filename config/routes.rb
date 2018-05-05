@@ -19,7 +19,7 @@ Rails.application.routes.draw do
       get :my_comment
       get :my_collect
       get :my_draft
-      get :my_firend
+      get :my_friend
     end
   end
 

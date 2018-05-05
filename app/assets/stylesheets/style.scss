@@ -40,7 +40,26 @@
   background-color: #9A9A9A;
 }
 
-// ========== User Show ==========
+// ========== User Profile ==========
 .user-profile {
+  background-color: #DEDEDE;
+}
+
+.user-profile-navs {
+  border-bottom: 1px solid #898989;
+}
+
+.user-profile-navs li a.nav-link.active,
+.user-profile-navs li a.nav-link.active:hover {
+  background-color: #DEDEDE;
+  border: 1px solid #898989;
+  border-bottom: 1px solid #DEDEDE;
+}
+
+.user-profile-navs li a.nav-link:hover {
+  border-bottom: none;
+}
+
+.user-profile-post {
   background-color: #DEDEDE;
 }
