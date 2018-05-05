@@ -26,6 +26,26 @@ class UsersController < ApplicationController
     end
   end
 
+  def my_post
+    #code
+  end
+
+  def my_comment
+    #code
+  end
+
+  def my_collect
+    #code
+  end
+
+  def my_draft
+    #code
+  end
+
+  def my_friend
+    #code
+  end
+
   private
 
   def user_params

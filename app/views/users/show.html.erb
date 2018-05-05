@@ -1,21 +1,4 @@
-<div class="user-profile p-5">
-  <div class="row">
-    <div class="col-md-2">
-      <div class="w-100">
-        <%= image_tag @user.avatar.url, class: "mw-100" if @user.avatar? %>
-      </div>
-      <h3 class="text-center mt-2"><%= @user.name %></h3>
-    </div>
-    <div class="offset-md-1 col-md-9">
-      <p><%= @user.introduction %></p>
-    </div>
-    <div class="w-100 text-right">
-      <% if current_user == @user %>
-        <%= link_to "Edit", edit_user_path(@user), class: "btn btn-secondary" %>
-      <% end %>
-    </div>
-  </div>
-</div>
+
 
 <ul class="nav nav-tabs">
   <li class="nav-item">

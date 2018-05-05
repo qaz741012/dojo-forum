@@ -13,7 +13,15 @@ Rails.application.routes.draw do
     resources :replies, except: [:index, :new, :show]
   end
 
-  resources :users, only: [:show, :edit, :update]
+  resources :users, only: [:edit, :update] do
+    member do
+      get :my_post
+      get :my_comment
+      get :my_collect
+      get :my_draft
+      get :my_firend
+    end
+  end
 
 
   namespace :admin do
