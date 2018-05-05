@@ -56,6 +56,15 @@ class UsersController < ApplicationController
     redirect_back(fallback_location: root_path)
   end
 
+  def cancel_request
+    friendship = current_user.friendships.find_by_friend_id(params[:id])
+    if friendship
+      friendship.destroy
+      flash[:notice] = "Successfully cancelled the request."
+      redirect_back(fallback_location: root_path)
+    end
+  end
+
   def confirm_friend
     #code
   end

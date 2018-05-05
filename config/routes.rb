@@ -21,6 +21,7 @@ Rails.application.routes.draw do
       get :my_draft
       get :my_friend
       post :add_friend
+      post :cancel_request
       post :confirm_friend
     end
   end

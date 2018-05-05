@@ -30,4 +30,16 @@ class User < ApplicationRecord
     self.collected_posts.include?(post)
   end
 
+  def friend_status(friend)
+    if self.friends.include?(friend)
+      if self.friendships.find_by_friend_id(friend.id).status == "confirm"
+        return "confirm"
+      elsif self.friendships.find_by_friend_id(friend.id).status == "request"
+        return "request"
+      end
+    else
+      return "unconfirm"
+    end
+  end
+
 end
