@@ -2,11 +2,6 @@ class UsersController < ApplicationController
   before_action :set_user
   before_action :profile_status, except: [:edit, :update, :my_post]
 
-  def show
-
-    @drafts = @user.posts.where(draft?: true)
-  end
-
   def edit
     if @user != current_user
       flash[:alert] = "You are not allow to edit profile of the other users"
@@ -39,7 +34,7 @@ class UsersController < ApplicationController
   end
 
   def my_draft
-    #code
+    @posts = @user.posts.where(draft?: true)
   end
 
   def my_friend
