@@ -38,7 +38,9 @@ class UsersController < ApplicationController
   end
 
   def my_friend
-    #code
+    @requests = Friendship.includes(:friend).where(user_id: @user.id, status: "request")
+    @unconfirms = Friendship.includes(:friend).where(user_id: @user.id, status: "unconfirm")
+    @confirms = Friendship.includes(:friend).where(user_id: @user.id, status: "confirm")
   end
 
   def add_friend
