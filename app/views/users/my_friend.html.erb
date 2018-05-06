@@ -1,50 +1,52 @@
 <%= render partial: "shared/user_profile", locals: { user: @user } %>
 
-<div class="user-profile-friend pt-4">
-  <div class="friend-list px-5">
-    <h5 class="text-center mb-3">Waiting for response</h5>
-    <div class="row">
-      <% @requests.each do |request| %>
-        <div class="col-md-2">
-          <div class="px-4 mb-2">
-            <%= image_tag request.friend.avatar.url, class: "mw-100" if request.friend.avatar? %>
+<% if current_user == @user %>
+  <div class="user-profile-friend pt-4">
+    <div class="friend-list px-5">
+      <h5 class="text-center mb-3">Waiting for response</h5>
+      <div class="row">
+        <% @requests.each do |request| %>
+          <div class="col-md-2">
+            <div class="px-4 mb-2">
+              <%= image_tag request.friend.avatar.url, class: "mw-100" if request.friend.avatar? %>
+            </div>
+            <h6 class="text-center"><%= request.friend.name %></h6>
+            <div class="mb-4">
+              <%= render partial: "shared/add_friend", locals: { user: request.friend } %>
+            </div>
           </div>
-          <h6 class="text-center"><%= request.friend.name %></h6>
-          <div class="mb-4">
-            <%= render partial: "shared/add_friend", locals: { user: request.friend } %>
+        <% end %>
+      </div>
+    </div>
+    <div class="friend-list px-5 pt-4">
+      <h5 class="text-center mb-3">Someone wants to be your friend</h5>
+      <div class="row">
+        <% @unconfirms.each do |unconfirm| %>
+          <div class="col-md-2">
+            <div class="px-4 mb-2">
+              <%= image_tag unconfirm.friend.avatar.url, class: "mw-100" if unconfirm.friend.avatar? %>
+            </div>
+            <h6 class="text-center"><%= unconfirm.friend.name %></h6>
+            <div class="mb-4">
+              <%= render partial: "shared/add_friend", locals: { user: unconfirm.friend } %>
+              <%= link_to "Ignore", "#", class: "btn btn-secondary d-block w-100 mt-2" %>
+            </div>
           </div>
-        </div>
-      <% end %>
+        <% end %>
+      </div>
+    </div>
+    <div class="friend-list px-5 pt-4">
+      <h5 class="text-center mb-3">Your friends</h5>
+      <div class="row">
+        <% @confirms.each do |confirm| %>
+          <div class="col-md-2">
+            <div class="px-4 mb-2">
+              <%= image_tag confirm.friend.avatar.url, class: "mw-100" if confirm.friend.avatar? %>
+            </div>
+            <h6 class="text-center mb-4"><%= confirm.friend.name %></h6>
+          </div>
+        <% end %>
+      </div>
     </div>
   </div>
-  <div class="friend-list px-5 pt-4">
-    <h5 class="text-center mb-3">Someone wants to be your friend</h5>
-    <div class="row">
-      <% @unconfirms.each do |unconfirm| %>
-        <div class="col-md-2">
-          <div class="px-4 mb-2">
-            <%= image_tag unconfirm.friend.avatar.url, class: "mw-100" if unconfirm.friend.avatar? %>
-          </div>
-          <h6 class="text-center"><%= unconfirm.friend.name %></h6>
-          <div class="mb-4">
-            <%= render partial: "shared/add_friend", locals: { user: unconfirm.friend } %>
-            <%= link_to "Ignore", "#", class: "btn btn-secondary d-block w-100 mt-2" %>
-          </div>
-        </div>
-      <% end %>
-    </div>
-  </div>
-  <div class="friend-list px-5 pt-4">
-    <h5 class="text-center mb-3">Your friends</h5>
-    <div class="row">
-      <% @confirms.each do |confirm| %>
-        <div class="col-md-2">
-          <div class="px-4 mb-2">
-            <%= image_tag confirm.friend.avatar.url, class: "mw-100" if confirm.friend.avatar? %>
-          </div>
-          <h6 class="text-center mb-4"><%= confirm.friend.name %></h6>
-        </div>
-      <% end %>
-    </div>
-  </div>
-</div>
+<% end %>

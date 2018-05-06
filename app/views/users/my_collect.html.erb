@@ -1,18 +1,20 @@
 <%= render partial: "shared/user_profile", locals: { user: @user } %>
 
-<div class="user-profile-collect px-5 position-relative">
-  <% @collects.each do |collect| %>
-    <div class="row px-3 py-3">
-      <div class="col-md-7">
-        <h5 class="pt-2">
-          <%= link_to collect.post.title, post_path(collect.post) %>
-        </h5>
+<% if current_user == @user %>
+  <div class="user-profile-collect px-5 position-relative">
+    <% @collects.each do |collect| %>
+      <div class="row px-3 py-3">
+        <div class="col-md-7">
+          <h5 class="pt-2">
+            <%= link_to collect.post.title, post_path(collect.post) %>
+          </h5>
+        </div>
+        <div class="col-md-5">
+          <%= link_to "Uncollect", uncollect_post_path(collect.post), method: :post,
+          class: "btn btn-secondary" %>
+        </div>
       </div>
-      <div class="col-md-5">
-        <%= link_to "Uncollect", uncollect_post_path(collect.post), method: :post,
-        class: "btn btn-secondary" %>
-      </div>
-    </div>
-    <div></div>
-  <% end %>
-</div>
+      <div></div>
+    <% end %>
+  </div>
+<% end %>
