@@ -36,9 +36,11 @@ class User < ApplicationRecord
         return "confirm"
       elsif self.friendships.find_by_friend_id(friend.id).status == "request"
         return "request"
+      elsif self.friendships.find_by_friend_id(friend.id).status == "unconfirm"
+        return "unconfirm"
       end
     else
-      return "unconfirm"
+      return nil
     end
   end
 

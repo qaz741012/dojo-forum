@@ -43,12 +43,15 @@ class UsersController < ApplicationController
 
   def add_friend
     if current_user != @user
-      friendship = current_user.friendships.build( friend_id: params[:id],
-                                                   status: "request" )
-      if friendship.save
+      friendship1 = current_user.friendships.build( friend_id: params[:id],
+                                                    status: "request" )
+      if friendship1.save
         flash[:notice] = "Successfully sent request."
+        friendship2 = @user.friendships.build( friend_id: current_user.id,
+                                               status: "unconfirm" )
+        friendship2.save
       else
-        flash[:alert] = friendship.errors.full_messages.to_sentence
+        flash[:alert] = friendship1.errors.full_messages.to_sentence
       end
     else
       flash[:alert] = "Can't send request to yourself."
@@ -66,7 +69,12 @@ class UsersController < ApplicationController
   end
 
   def confirm_friend
-    #code
+    friendship1 = current_user.friendships.find_by_friend_id(params[:id])
+    friendship1.update(status: "confirm")
+    friendship2 = @user.friendships.find_by_friend_id(current_user.id)
+    friendship2.update(status: "confirm")
+    flash[:notice] = "Confirmed the friend."
+    redirect_back(fallback_location: root_path)
   end
 
   private
