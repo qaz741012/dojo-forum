@@ -13,7 +13,9 @@
       <% if current_user == user %>
         <%= link_to "Edit", edit_user_path(user), class: "btn btn-secondary" %>
       <% else %>
-        <%= render partial: "shared/add_friend", locals: { user: user } %>
+        <div class="d-inline-block" style="max-width: 180px;">
+          <%= render partial: "shared/add_friend", locals: { user: user } %>
+        </div>
       <% end %>
     </div>
   </div>

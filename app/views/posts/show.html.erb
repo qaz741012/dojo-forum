@@ -24,7 +24,11 @@
         <%= image_tag @post.user.avatar.url, class: "mw-100" if @post.user.avatar? %>
       </div>
       <h3 class="mx-auto mt-1 text-center"><%= @post.user.name %></h3>
-      <a href="#" class="btn btn-secondary d-block mt-3">Add Friend</a>
+      <div class="mt-3 w-100 post-show-add-friend">
+        <% if current_user != @post.user %>
+          <%= render partial: "shared/add_friend", locals: { user: @post.user } %>
+        <% end %>
+      </div>
     </div>
     <div class="offset-md-1 col-md-9 position-relative">
       <div class="mb-4" style="max-width: 500px; max-height: 400px;">
@@ -58,7 +62,11 @@
         <%= image_tag reply.user.avatar.url, class: "mw-100" if reply.user.avatar? %>
       </div>
       <h3 class="mx-auto mt-1 text-center"><%= reply.user.name %></h3>
-      <a href="#" class="btn btn-secondary d-block mt-3">Add Friend</a>
+      <div class="mt-3 w-100 post-show-add-friend">
+        <% if current_user != reply.user %>
+          <%= render partial: "shared/add_friend", locals: { user: reply.user } %>
+        <% end %>
+      </div>
     </div>
     <div class="offset-md-1 col-md-9">
       <div class="px-2">
