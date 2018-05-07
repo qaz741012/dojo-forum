@@ -22,8 +22,10 @@ class PostsController < ApplicationController
     post = current_user.posts.build(add_draft)
     if post.save
       # save categories
-      post_category_params[:category_id].each do |category_id|
-        post.post_categories.create(category_id: category_id)
+      if post_category_params
+        post_category_params[:category_id].each do |category_id|
+          post.post_categories.create(category_id: category_id)
+        end
       end
 
       flash[:notice] = "The post was successfully created!"
@@ -52,8 +54,10 @@ class PostsController < ApplicationController
 
     if post.update(add_draft)
       # save categories
-      post_category_params[:category_id].each do |category_id|
-        post.post_categories.create(category_id: category_id)
+      if post_category_params
+        post_category_params[:category_id].each do |category_id|
+          post.post_categories.create(category_id: category_id)
+        end
       end
 
       flash[:notice] = "The post was successfully created!"
@@ -99,7 +103,9 @@ class PostsController < ApplicationController
   end
 
   def post_category_params
-    params.require(:post_category).permit(category_id: [])
+    if params[:post_category]
+      params.require(:post_category).permit(category_id: [])
+    end
   end
 
 end
