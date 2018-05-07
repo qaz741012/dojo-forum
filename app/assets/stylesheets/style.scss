@@ -6,6 +6,28 @@
   font-weight: 600;
 }
 
+// ========== Sign up & Log in ==========
+.login-group {
+  padding-top: 100px;
+}
+
+.login-group > div {
+  width: 350px;
+}
+
+.login-btn {
+  width: 150px;
+  position: absolute;
+}
+
+.login-btn:nth-child(1) {
+  left: 0;
+}
+
+.login-btn:nth-child(2) {
+  right: 0;
+}
+
 // ========== Post Show ==========
 .post-title {
   background-color: #CDCDCD;
