@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   # validates :name, presence: true
+  before_save :default_avatar
 
   mount_uploader :avatar, AvatarUploader
 
@@ -42,6 +43,10 @@ class User < ApplicationRecord
     else
       return nil
     end
+  end
+
+  def default_avatar
+    self.remote_avatar_url = "https://osclass.calinbehtuk.ro/oc-content/themes/vrisko/images/no_user.png"
   end
 
 end
