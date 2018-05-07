@@ -9,6 +9,7 @@ class PostsController < ApplicationController
       @posts = @category.posts.page(params[:page]).per(10)
     else
       @posts = Post.page(params[:page]).per(10)
+      # @posts = auth_posts.page(params[:page]).per(10)
     end
   end
 
@@ -60,7 +61,7 @@ class PostsController < ApplicationController
         end
       end
 
-      flash[:notice] = "The post was successfully created!"
+      flash[:notice] = "The post was successfully updated!"
       redirect_to post_path(post)
     else
       flash[:alert] = post.errors.full_messages.to_sentence
@@ -107,5 +108,13 @@ class PostsController < ApplicationController
       params.require(:post_category).permit(category_id: [])
     end
   end
+
+  # def auth_posts
+  #   friend_id_list = current_user.friendships.where(status: "confirm").pluck(:friend_id)
+  #
+  #   Post.where(auth: "public").
+  #   or(Post.where(auth: "self", user: current_user).
+  #   or(Post.where(auth: "friend", user_id: friend_id_list)))
+  # end
 
 end
