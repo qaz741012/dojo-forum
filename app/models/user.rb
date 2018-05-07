@@ -1,6 +1,6 @@
 class User < ApplicationRecord
   # validates :name, presence: true
-  before_save :default_avatar
+  before_create :default_avatar
 
   mount_uploader :avatar, AvatarUploader
 
