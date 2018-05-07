@@ -13,7 +13,7 @@ class UsersController < ApplicationController
     if @user == current_user
       if @user.update(user_params)
         flash[:notice] = "Profile was successfully updated."
-        redirect_to user_path(@user)
+        redirect_to my_post_user_path(@user)
       else
         flash[:alert] = @user.errors.full_messages.to_sentence
         redirect_back(fallback_location: root_path)

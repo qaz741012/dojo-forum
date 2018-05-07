@@ -1,12 +1,22 @@
 <%= form_for @user do |f| %>
   <div class="form-group">
-    <%= f.text_field :name, class: "form-control" %>
+    <div class="pt-5 px-5 pb-4">
+      <%= f.text_field :name, class: "form-control mb-4", placeholder: "Name" %>
 
-    <%= f.text_area :introduction, class: "form-control" %>
-
-    <%= image_tag @user.avatar.url if @user.avatar? %>
-    <%= f.file_field :avatar %>
-
-    <%= f.submit "Submit", class: "btn btn-secondary" %>
+      <%= f.text_area :introduction, class: "form-control", rows: 4,
+      placeholder: "Write something to introduce yourself..." %>
+    </div>
+    <div class="px-5 pb-4">
+      <div style="width: 200px;" class="d-inline-block">
+        <%= image_tag @user.avatar.url, class: "mw-100" if @user.avatar? %>
+      </div>
+      <label class="btn btn-secondary px-4 ml-2 d-inline-block align-top">
+        <span class="d-none"><%= f.file_field :avatar %></span>
+        File
+      </label>
+    </div>
+    <div class="px-5">
+      <%= f.submit "Submit", class: "btn btn-secondary" %>
+    </div>
   </div>
 <% end %>
