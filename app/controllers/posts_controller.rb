@@ -38,6 +38,10 @@ class PostsController < ApplicationController
   def create
     add_draft = post_params
     add_draft[:draft?] = (params[:commit] == "Save Draft")
+    if add_draft[:draft?]
+      add_draft[:auth] = "self"
+    end
+    
     post = current_user.posts.build(add_draft)
     if post.save
       # save categories
@@ -81,6 +85,9 @@ class PostsController < ApplicationController
 
     add_draft = post_params
     add_draft[:draft?] = (params[:commit] == "Save Draft")
+    if add_draft[:draft?]
+      add_draft[:auth] = "self"
+    end
 
     if post.update(add_draft)
       # save categories
