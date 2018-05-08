@@ -57,7 +57,7 @@
   <div style="height: 1px; clear: both;" class="bg-secondary my-5"></div>
 </div>
 
-<% @post.replies.each do |reply| %>
+<% @replies.each do |reply| %>
   <div class="row mb-3 mx-4">
     <div class="col-md-2">
       <div class="w-100 m-auto">
@@ -91,6 +91,10 @@
   </div>
   <div style="height: 1px; clear: both;" class="bg-secondary my-4"></div>
 <% end %>
+
+<div class="text-center" style="margin-top: 100px;">
+  <%= paginate @replies, window: 2 %>
+</div>
 
 <div class="mt-5 mx-4">
   <%= form_for [@post, Reply.new] do |f| %>

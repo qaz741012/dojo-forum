@@ -62,12 +62,13 @@ class PostsController < ApplicationController
   end
 
   def show
-    @post = Post.includes(replies: :user).find(params[:id])
+    @post = Post.find(params[:id])
     if !(@post.auth_user?(current_user) || current_user.admin?)
       flash[:alert] = "You don't have authority to this post."
       redirect_back(fallback_location: root_path)
     end
     @categories = @post.categories
+    @replies = Reply.includes(:user).where(post_id: @post.id).page(params[:page]).per(20)
 
     viewed_count = @post.viewed_count + 1
     @post.update(viewed_count: viewed_count)
