@@ -47,6 +47,9 @@ class PostsController < ApplicationController
   def show
     @post = Post.includes(replies: :user).find(params[:id])
     @categories = @post.categories
+
+    viewed_count = @post.viewed_count + 1
+    @post.update(viewed_count: viewed_count)
   end
 
   def edit
