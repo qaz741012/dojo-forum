@@ -4,12 +4,21 @@
 
 <ul class="nav nav-pills category-navs mt-3 mx-3">
   <li class="nav-item">
-    <a class="nav-link <%= "active" if !@category %>" href="<%= root_path %>">All</a>
+    <% if @order %>
+      <%= link_to "All", root_path(order: @order), class: "nav-link #{'active' if !@category}" %>
+    <% else %>
+      <%= link_to "All", root_path, class: "nav-link #{'active' if !@category}" %>
+    <% end %>
   </li>
   <% @categories.each do |category| %>
     <li class="nav-item">
-      <%= link_to category.name, root_path(category_id: category.id),
-      class: "nav-link #{'active' if @category == category}" %>
+      <% if @order %>
+          <%= link_to category.name, root_path(category_id: category.id, order: @order),
+          class: "nav-link #{'active' if @category == category}" %>
+      <% else %>
+          <%= link_to category.name, root_path(category_id: category.id),
+          class: "nav-link #{'active' if @category == category}" %>
+      <% end %>
     </li>
   <% end %>
 </ul>
@@ -19,14 +28,26 @@
     <thead class="thead-light">
       <tr>
         <th>
-          <%= link_to "Replies count", root_path(order: "replies_count") %>
+          <% if @category %>
+            <%= link_to "Replies count", root_path(order: "replies_count", category_id: @category.id) %>
+          <% else %>
+            <%= link_to "Replies count", root_path(order: "replies_count") %>
+          <% end %>
         </th>
         <th>Title</th>
         <th>
-          <%= link_to "Last replied at", root_path(order: "last_replied") %>
+          <% if @category %>
+            <%= link_to "Last replied at", root_path(order: "last_replied", category_id: @category.id) %>
+          <% else %>
+            <%= link_to "Last replied at", root_path(order: "last_replied") %>
+          <% end %>
         </th>
         <th>
-          <%= link_to "Viewed count", root_path(order: "viewed_count") %>
+          <% if @category %>
+            <%= link_to "Viewed count", root_path(order: "viewed_count", category_id: @category.id) %>
+          <% else %>
+            <%= link_to "Viewed count", root_path(order: "viewed_count") %>
+          <% end %>
         </th>
       </tr>
     </thead>
@@ -39,6 +60,8 @@
           <td>
             <% if !post.replies.empty? %>
               <%= post.last_replied_time.strftime("%Y-%m-%d %H:%M") %>
+            <% else %>
+              <p>--</p>
             <% end %>
           </td>
           <td><%= post.viewed_count %></td>

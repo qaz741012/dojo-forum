@@ -23,10 +23,12 @@ class PostsController < ApplicationController
     when "replies_count"
       @posts = @posts.order(replies_count: :desc)
     when "last_replied"
-      1
+      @posts = @posts.order(last_replied_time: :desc)
     when "viewed_count"
       @posts = @posts.order(viewed_count: :desc)
     end
+
+    @order = params[:order] if params[:order]
   end
 
   def new
