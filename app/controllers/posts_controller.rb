@@ -6,10 +6,17 @@ class PostsController < ApplicationController
 
     if params[:category_id]
       @category = Category.includes(:posts).find(params[:category_id])
-      @posts = @category.posts.page(params[:page]).per(10)
+      if current_user
+        @posts = @category.posts.auth_posts(current_user).page(params[:page]).per(10)
+      else
+        @posts = @category.posts.public_posts.page(params[:page]).per(10)
+      end
     else
-      @posts = Post.page(params[:page]).per(10)
-      # @posts = auth_posts.page(params[:page]).per(10)
+      if current_user
+        @posts = Post.auth_posts(current_user).page(params[:page]).per(10)
+      else
+        @posts = Post.public_posts.page(params[:page]).per(10)
+      end
     end
   end
 
@@ -108,13 +115,5 @@ class PostsController < ApplicationController
       params.require(:post_category).permit(category_id: [])
     end
   end
-
-  # def auth_posts
-  #   friend_id_list = current_user.friendships.where(status: "confirm").pluck(:friend_id)
-  #
-  #   Post.where(auth: "public").
-  #   or(Post.where(auth: "self", user: current_user).
-  #   or(Post.where(auth: "friend", user_id: friend_id_list)))
-  # end
 
 end

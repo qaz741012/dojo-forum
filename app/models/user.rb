@@ -45,6 +45,19 @@ class User < ApplicationRecord
     end
   end
 
+  # def have_authority_to(post)
+  #   condition1 = ( post.auth == "public" )
+  #
+  #   friend_id_list = self.friendships.where(status: "confirm").pluck(:friend_id) << self.id
+  #   condition2 = ( post.auth == "friend" &&
+  #                  friend_id_list.include?(post.user_id) )
+  #
+  #   condition3 = ( post.auth == "self" &&
+  #                  post.user_id == self.id )
+  #
+  #   return condition1 or condition2 or condition3
+  # end
+
   def default_avatar
     self.remote_avatar_url = "https://osclass.calinbehtuk.ro/oc-content/themes/vrisko/images/no_user.png"
   end
