@@ -80,6 +80,7 @@ class PostsController < ApplicationController
 
     if post.update(add_draft)
       # save categories
+      post.post_categories.destroy_all
       if post_category_params
         post_category_params[:category_id].each do |category_id|
           post.post_categories.create(category_id: category_id)
