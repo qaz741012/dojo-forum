@@ -16,4 +16,15 @@ class Post < ApplicationRecord
   has_many :post_categories, dependent: :destroy
   has_many :categories, through: :post_categories
 
+  def auth_user?(user)
+    case self.auth
+    when "public"
+      return true
+    when "friend"
+      return (user.friendships.where(status: "confirm").pluck(:friend_id) << user.id).include?(self.user_id)
+    when "self"
+      return user == self.user
+    end
+  end
+
 end
