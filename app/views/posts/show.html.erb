@@ -78,7 +78,7 @@
   </div>
   <div class="position-relative">
     <div class="post-edit">
-      <% if current_user.admin? || reply.user == current_user %>
+      <% if reply.user == current_user %>
         <%= link_to edit_post_reply_path(@post, reply), class: "btn btn-light" do %>
           <%= icon("far", "edit") %>
         <% end %>

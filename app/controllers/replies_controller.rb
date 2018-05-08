@@ -16,6 +16,10 @@ class RepliesController < ApplicationController
 
   def edit
     @reply = Reply.find(params[:id])
+    if current_user != @reply.user
+      flash[:alert] = "You don't have authority to this post."
+      redirect_back(fallback_location: root_path)
+    end
   end
 
   def update
@@ -34,9 +38,14 @@ class RepliesController < ApplicationController
 
   def destroy
     reply = Reply.find(params[:id])
-    reply.destroy
-    flash[:notice] = "Comment was successfully deleted."
-    redirect_back(fallback_location: root_path)
+    if current_user != reply.user
+      flash[:alert] = "You don't have authority to this post."
+      redirect_back(fallback_location: root_path)
+    else
+      reply.destroy
+      flash[:notice] = "Comment was successfully deleted."
+      redirect_back(fallback_location: root_path)
+    end
   end
 
   private
