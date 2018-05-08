@@ -70,6 +70,10 @@ class PostsController < ApplicationController
   def edit
     @categories = Category.all
     @post = Post.find(params[:id])
+    if current_user != @post.user
+      flash[:alert] = "You don't have authority to this post."
+      redirect_back(fallback_location: root_path)
+    end
   end
 
   def update

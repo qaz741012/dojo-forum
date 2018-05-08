@@ -41,10 +41,12 @@
   </div>
   <div class="position-relative mt-4">
     <div class="post-edit">
-      <% if current_user.admin? || @post.user == current_user %>
+      <% if @post.user == current_user %>
         <%= link_to edit_post_path(@post), class: "btn btn-light" do %>
           <%= icon("far", "edit") %>
         <% end %>
+      <% end %>
+      <% if @post.user == current_user || current_user.admin? %>
         <%= link_to post_path(@post), method: :delete,
         class: "btn btn-light", data: { confirm: "Are you sure?" } do %>
           <%= icon("fas", "times") %>
