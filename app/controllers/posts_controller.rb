@@ -13,7 +13,7 @@ class PostsController < ApplicationController
       end
     else
       if current_user
-        @posts = Post.auth_posts(current_user).page(params[:page])
+        @posts = Post.auth_posts(current_user).page(params[:page]).per(10)
       else
         @posts = Post.public_posts.page(params[:page]).per(10)
       end
@@ -41,7 +41,7 @@ class PostsController < ApplicationController
     if add_draft[:draft?]
       add_draft[:auth] = "self"
     end
-    
+
     post = current_user.posts.build(add_draft)
     if post.save
       # save categories
