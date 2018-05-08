@@ -7,17 +7,17 @@ class PostsController < ApplicationController
     if params[:category_id]
       @category = Category.includes(:posts).find(params[:category_id])
       if current_user
-        @posts = @category.posts.auth_posts(current_user).page(params[:page]).per(10)
-        @posts = @category.posts.page(params[:page]).per(10) if current_user.admin?
+        @posts = @category.posts.auth_posts(current_user).page(params[:page]).per(20)
+        @posts = @category.posts.page(params[:page]).per(20) if current_user.admin?
       else
-        @posts = @category.posts.public_posts.page(params[:page]).per(10)
+        @posts = @category.posts.public_posts.page(params[:page]).per(20)
       end
     else
       if current_user
-        @posts = Post.auth_posts(current_user).page(params[:page]).per(10)
-        @posts = Post.all.page(params[:page]).per(10) if current_user.admin?
+        @posts = Post.auth_posts(current_user).page(params[:page]).per(20)
+        @posts = Post.all.page(params[:page]).per(20) if current_user.admin?
       else
-        @posts = Post.public_posts.page(params[:page]).per(10)
+        @posts = Post.public_posts.page(params[:page]).per(20)
       end
     end
 
