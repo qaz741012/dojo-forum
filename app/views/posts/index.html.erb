@@ -18,10 +18,16 @@
   <table class="table table-hover">
     <thead class="thead-light">
       <tr>
-        <th>Replies count</th>
+        <th>
+          <%= link_to "Replies count", root_path(order: "replies_count") %>
+        </th>
         <th>Title</th>
-        <th>Last replied at</th>
-        <th>Viewed count</th>
+        <th>
+          <%= link_to "Last replied at", root_path(order: "last_replied") %>
+        </th>
+        <th>
+          <%= link_to "Viewed count", root_path(order: "viewed_count") %>
+        </th>
       </tr>
     </thead>
 

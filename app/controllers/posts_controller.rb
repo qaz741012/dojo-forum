@@ -13,10 +13,19 @@ class PostsController < ApplicationController
       end
     else
       if current_user
-        @posts = Post.auth_posts(current_user).page(params[:page]).per(10)
+        @posts = Post.auth_posts(current_user).page(params[:page])
       else
         @posts = Post.public_posts.page(params[:page]).per(10)
       end
+    end
+
+    case params[:order]
+    when "replies_count"
+      @posts = @posts.order(replies_count: :desc)
+    when "last_replied"
+      1
+    when "viewed_count"
+      @posts = @posts.order(viewed_count: :desc)
     end
   end
 
