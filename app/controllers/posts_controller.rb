@@ -8,12 +8,14 @@ class PostsController < ApplicationController
       @category = Category.includes(:posts).find(params[:category_id])
       if current_user
         @posts = @category.posts.auth_posts(current_user).page(params[:page]).per(10)
+        @posts = @category.posts.page(params[:page]).per(10) if current_user.admin?
       else
         @posts = @category.posts.public_posts.page(params[:page]).per(10)
       end
     else
       if current_user
         @posts = Post.auth_posts(current_user).page(params[:page]).per(10)
+        @posts = Post.all.page(params[:page]).per(10) if current_user.admin?
       else
         @posts = Post.public_posts.page(params[:page]).per(10)
       end
@@ -61,7 +63,7 @@ class PostsController < ApplicationController
 
   def show
     @post = Post.includes(replies: :user).find(params[:id])
-    if !@post.auth_user?(current_user)
+    if !(@post.auth_user?(current_user) || current_user.admin?)
       flash[:alert] = "You don't have authority to this post."
       redirect_back(fallback_location: root_path)
     end
