@@ -30,17 +30,32 @@ class UsersController < ApplicationController
   end
 
   def my_collect
-    @collects = Collect.includes(:post).where(user_id: @user.id)
+    if current_user == @user || current_user.admin?
+      @collects = Collect.includes(:post).where(user_id: @user.id)
+    else
+      flash[:alert] = "You don't have the authority."
+      redirect_back(fallback_location: root_path)
+    end
   end
 
   def my_draft
-    @posts = @user.posts.where(draft?: true)
+    if current_user == @user || current_user.admin?
+      @posts = @user.posts.where(draft?: true)
+    else
+      flash[:alert] = "You don't have the authority."
+      redirect_back(fallback_location: root_path)
+    end
   end
 
   def my_friend
-    @requests = Friendship.includes(:friend).where(user_id: @user.id, status: "request")
-    @unconfirms = Friendship.includes(:friend).where(user_id: @user.id, status: "unconfirm")
-    @confirms = Friendship.includes(:friend).where(user_id: @user.id, status: "confirm")
+    if current_user == @user || current_user.admin?
+      @requests = Friendship.includes(:friend).where(user_id: @user.id, status: "request")
+      @unconfirms = Friendship.includes(:friend).where(user_id: @user.id, status: "unconfirm")
+      @confirms = Friendship.includes(:friend).where(user_id: @user.id, status: "confirm")
+    else
+      flash[:alert] = "You don't have the authority."
+      redirect_back(fallback_location: root_path)
+    end
   end
 
   def add_friend

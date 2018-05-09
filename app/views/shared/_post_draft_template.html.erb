@@ -10,12 +10,16 @@
           </td>
           <td><%= post.created_at.strftime("%Y-%m-%d") %></td>
           <td>
-            <%= link_to edit_post_path(post), class: "btn btn-light" do %>
-              <%= icon("far", "edit") %>
+            <% if current_user == @user %>
+              <%= link_to edit_post_path(post), class: "btn btn-light" do %>
+                <%= icon("far", "edit") %>
+              <% end %>
             <% end %>
-            <%= link_to post_path(post), method: :delete, class: "btn btn-light",
-            data: { confirm: "Are you sure?" } do %>
-              <%= icon("fas", "times") %>
+            <% if current_user == @user || current_user.admin? %>
+              <%= link_to post_path(post), method: :delete, class: "btn btn-light",
+              data: { confirm: "Are you sure?" } do %>
+                <%= icon("fas", "times") %>
+              <% end %>
             <% end %>
           </td>
         </tr>

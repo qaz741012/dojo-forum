@@ -1,6 +1,6 @@
 <%= render partial: "shared/user_profile", locals: { user: @user } %>
 
-<% if current_user == @user %>
+<% if current_user == @user || current_user.admin? %>
   <div class="user-profile-collect px-5 position-relative">
     <% @collects.each do |collect| %>
       <div class="row px-3 py-3">
@@ -10,8 +10,10 @@
           </h5>
         </div>
         <div class="col-md-5">
-          <%= link_to "Uncollect", uncollect_post_path(collect.post), method: :post,
-          class: "btn btn-secondary" %>
+          <% if current_user == @user %>
+            <%= link_to "Uncollect", uncollect_post_path(collect.post), method: :post,
+            class: "btn btn-secondary" %>
+          <% end %>
         </div>
       </div>
       <div></div>

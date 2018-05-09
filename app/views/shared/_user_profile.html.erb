@@ -21,17 +21,17 @@
   </div>
 </div>
 
-<% if current_user == user %>
-  <div class="mt-4">
-    <ul class="nav nav-tabs user-profile-navs">
-      <li class="nav-item ml-5">
-        <%= link_to "My Post", my_post_user_path(user),
-        class: "nav-link #{"active" if !@status }" %>
-      </li>
-      <li class="nav-item">
-        <%= link_to "My Comment", my_comment_user_path(user,status: "comment"),
-        class: "nav-link #{"active" if @status == "comment"}" %>
-      </li>
+<div class="mt-4">
+  <ul class="nav nav-tabs user-profile-navs">
+    <li class="nav-item ml-5">
+      <%= link_to "My Post", my_post_user_path(user),
+      class: "nav-link #{"active" if !@status }" %>
+    </li>
+    <li class="nav-item">
+      <%= link_to "My Comment", my_comment_user_path(user,status: "comment"),
+      class: "nav-link #{"active" if @status == "comment"}" %>
+    </li>
+    <% if current_user == user || current_user.admin? %>
       <li class="nav-item">
         <%= link_to "My Collect", my_collect_user_path(user,status: "collect"),
         class: "nav-link #{"active" if @status == "collect"}" %>
@@ -44,6 +44,6 @@
         <%= link_to "My Friend", my_friend_user_path(user,status: "friend"),
         class: "nav-link #{"active" if @status == "friend"}" %>
       </li>
-    </ul>
-  </div>
-<% end %>
+    <% end %>
+  </ul>
+</div>
