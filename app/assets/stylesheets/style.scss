@@ -68,6 +68,24 @@
   background-color: #9A9A9A;
 }
 
+// ========== Feeds ==========
+.feeds-up {
+  background-color: #DEDEDE;
+}
+
+.feeds-up > div {
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+.feeds-number-box > p {
+  background-color: #fff;
+  border: 1px solid #ABABAB;
+  width: 200px;
+  padding: 5px;
+  letter-spacing: 1.5px;
+}
+
 // ========== User Profile ==========
 .user-profile {
   background-color: #DEDEDE;

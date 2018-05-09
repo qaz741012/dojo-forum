@@ -138,6 +138,14 @@ class PostsController < ApplicationController
     redirect_back(fallback_location: root_path)
   end
 
+  def feeds
+    @user_count = User.count
+    @post_count = Post.count
+    @reply_count = Reply.count
+
+    
+  end
+
   private
 
   def post_params

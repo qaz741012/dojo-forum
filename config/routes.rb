@@ -10,6 +10,10 @@ Rails.application.routes.draw do
       post :uncollect
     end
 
+    collection do
+      get :feeds
+    end
+
     resources :replies, except: [:index, :new, :show]
   end
 
