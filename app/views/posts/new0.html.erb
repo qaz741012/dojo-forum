@@ -1,17 +1,17 @@
 <div class="pt-5 mx-5">
-  <%= form_for @post, url: posts_path, method: :post do |f| %>
+  <%= form_tag posts_path do %>
     <div class="form-group">
-      <%= f.text_field :title, placeholder: "Title", class: "form-control" %>
+      <%= text_field_tag "post[title]", nil, placeholder: "Title", class: "form-control" %>
     </div>
 
     <div class="form-group">
-      <%= f.text_area :content, placeholder: "Write something...", class: "form-control", rows: 8 %>
+      <%= text_area_tag "post[content]", nil, placeholder: "Write something...", class: "form-control", rows: 8 %>
     </div>
 
     <div class="form-group">
       <label class="btn btn-secondary px-4">
         File
-        <span class="d-none"><%= f.file_field :photo %></span>
+        <span class="d-none"><%= file_field_tag :photo %></span>
       </label>
     </div>
 
