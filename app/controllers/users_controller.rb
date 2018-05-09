@@ -29,7 +29,11 @@ class UsersController < ApplicationController
   end
 
   def my_comment
-    @replies = Reply.includes(:post).where(user_id: @user.id)
+    @replies = Reply.includes(:post).where( user_id: @user.id)
+    if !current_user.admin?
+      @replies = Reply.includes(:post).where( user_id: @user.id,
+                                              post_id: Post.all.auth_posts(current_user).pluck(:id))
+    end
   end
 
   def my_collect
