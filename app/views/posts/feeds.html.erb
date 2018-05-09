@@ -29,7 +29,11 @@
         <% @chatterboxes.each do |chatterbox| %>
           <div class="row">
             <div class="offset-md-2 col-md-2 text-right"><%= "#{i}." %></div>
-            <div class="col-md-4 text-left"><%= chatterbox.name %></div>
+            <div class="col-md-4 text-left">
+              <strong>
+                <%= link_to chatterbox.name, my_post_user_path(chatterbox), class: "link-style" %>
+              </strong>
+            </div>
             <div class="col-md-2 text-left"><%= chatterbox.replies_count %></div>
           </div>
           <% i += 1 %>
@@ -45,7 +49,11 @@
         <% @most_popular_posts.each do |post| %>
         <div class="row">
           <div class="col-md-1 text-right"><%= "#{j}." %></div>
-          <div class="col-md-8 text-left"><%= post.title %></div>
+          <div class="col-md-8 text-left">
+            <strong>
+              <%= link_to post.title, post_path(post), class: "link-style" %>
+            </strong>
+          </div>
           <div class="col-md-2 text-left"><%= post.replies_count %></div>
         </div>
         <% j += 1 %>

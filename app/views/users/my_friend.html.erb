@@ -10,7 +10,9 @@
             <div class="px-4 mb-2">
               <%= image_tag request.friend.avatar.url, class: "mw-100" if request.friend.avatar? %>
             </div>
-            <h6 class="text-center"><%= request.friend.name %></h6>
+            <h6 class="text-center">
+              <%= link_to request.friend.name, my_post_user_path(request.friend), class: "link-style" %>
+            </h6>
             <div class="mb-4">
               <% if current_user == @user %>
                 <%= render partial: "shared/add_friend", locals: { user: request.friend } %>
@@ -28,7 +30,9 @@
             <div class="px-4 mb-2">
               <%= image_tag unconfirm.friend.avatar.url, class: "mw-100" if unconfirm.friend.avatar? %>
             </div>
-            <h6 class="text-center"><%= unconfirm.friend.name %></h6>
+            <h6 class="text-center">
+              <%= link_to unconfirm.friend.name, my_post_user_path(unconfirm.friend), class: "link-style" %>
+            </h6>
             <div class="mb-4">
               <% if current_user == @user %>
                 <%= render partial: "shared/add_friend", locals: { user: unconfirm.friend } %>
@@ -47,7 +51,9 @@
             <div class="px-4 mb-2">
               <%= image_tag confirm.friend.avatar.url, class: "mw-100" if confirm.friend.avatar? %>
             </div>
-            <h6 class="text-center mb-4"><%= confirm.friend.name %></h6>
+            <h6 class="text-center mb-4">
+              <%= link_to confirm.friend.name, my_post_user_path(confirm.friend), class: "link-style" %>
+            </h6>
           </div>
         <% end %>
       </div>

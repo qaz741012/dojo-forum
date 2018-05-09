@@ -1,4 +1,12 @@
 // ========== Basic Settings ==========
+.link-style {
+  color: #767676;
+}
+
+.link-style:hover {
+  color: #9A9A9A;
+  text-decoration: none;
+}
 
 // ========== Navbar ==========
 .navbar-nav .nav-item .nav-link.user-email {
@@ -93,7 +101,7 @@
 
 .feeds-most-title {
   border-bottom: 2px solid #ABABAB;
-  width: 300px;
+  width: 350px;
   margin-bottom: 20px;
 }
 

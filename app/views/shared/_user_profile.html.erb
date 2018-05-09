@@ -25,24 +25,24 @@
   <ul class="nav nav-tabs user-profile-navs">
     <li class="nav-item ml-5">
       <%= link_to "My Post", my_post_user_path(user),
-      class: "nav-link #{"active" if !@status }" %>
+      class: "nav-link #{"active" if !@status } link-style" %>
     </li>
     <li class="nav-item">
       <%= link_to "My Comment", my_comment_user_path(user,status: "comment"),
-      class: "nav-link #{"active" if @status == "comment"}" %>
+      class: "nav-link #{"active" if @status == "comment"} link-style" %>
     </li>
     <% if current_user == user || current_user.admin? %>
       <li class="nav-item">
         <%= link_to "My Collect", my_collect_user_path(user,status: "collect"),
-        class: "nav-link #{"active" if @status == "collect"}" %>
+        class: "nav-link #{"active" if @status == "collect"} link-style" %>
       </li>
       <li class="nav-item">
         <%= link_to "My Draft", my_draft_user_path(user,status: "draft"),
-        class: "nav-link #{"active" if @status == "draft"}" %>
+        class: "nav-link #{"active" if @status == "draft"} link-style" %>
       </li>
       <li class="nav-item">
         <%= link_to "My Friend", my_friend_user_path(user,status: "friend"),
-        class: "nav-link #{"active" if @status == "friend"}" %>
+        class: "nav-link #{"active" if @status == "friend"} link-style" %>
       </li>
     <% end %>
   </ul>

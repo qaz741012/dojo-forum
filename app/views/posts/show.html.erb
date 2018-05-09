@@ -23,7 +23,7 @@
         <%= image_tag @post.user.avatar.url, class: "mw-100" if @post.user.avatar? %>
       </div>
       <h3 class="mx-auto mt-1 text-center">
-        <%= link_to @post.user.name, my_post_user_path(@post.user) %>
+        <%= link_to @post.user.name, my_post_user_path(@post.user), class: "link-style" %>
       </h3>
       <div class="mt-3 w-100 post-show-add-friend">
         <% if current_user != @post.user %>
@@ -65,7 +65,7 @@
         <%= image_tag reply.user.avatar.url, class: "mw-100" if reply.user.avatar? %>
       </div>
       <h3 class="mx-auto mt-1 text-center">
-        <%= link_to reply.user.name, my_post_user_path(reply.user) %>
+        <%= link_to reply.user.name, my_post_user_path(reply.user), class: "link-style" %>
       </h3>
       <div class="mt-3 w-100 post-show-add-friend">
         <% if current_user != reply.user %>

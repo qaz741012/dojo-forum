@@ -4,7 +4,7 @@
       <% posts.each do |post| %>
         <tr>
           <td>
-            <%= link_to post_path(post) do %>
+            <%= link_to post_path(post), class: "link-style" do %>
               <h5><%= post.title %></h5>
             <% end %>
           </td>

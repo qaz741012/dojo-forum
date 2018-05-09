@@ -5,7 +5,7 @@
     <div class="row mt-3">
       <div class="col-md-8">
         <h4>
-          <%= link_to reply.post.title, post_path(reply.post) %>
+          <%= link_to reply.post.title, post_path(reply.post), class: "link-style" %>
         </h4>
         <div class="user-profile-comment-content mb-3">
           <p class="py-3 px-2"><%= reply.comment %></p>
