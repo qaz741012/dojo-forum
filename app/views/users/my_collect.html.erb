@@ -3,7 +3,7 @@
 <% if current_user == @user || current_user.admin? %>
   <div class="user-profile-collect px-5 position-relative">
     <% @collects.each do |collect| %>
-      <div class="row px-3 py-3">
+      <div class="row px-3 py-3" id="<%= collect.post.id %>">
         <div class="col-md-7">
           <h5 class="pt-2">
             <%= link_to collect.post.title, post_path(collect.post), class: "link-style" %>
@@ -11,12 +11,26 @@
         </div>
         <div class="col-md-5">
           <% if current_user == @user %>
-            <%= link_to "Uncollect", uncollect_post_path(collect.post), method: :post,
-            class: "btn btn-secondary" %>
+            <button class="btn btn-outline-secondary ajax-uncollect">Uncollect</button>
           <% end %>
         </div>
       </div>
-      <div></div>
+      <div id="<%= collect.post.id %>div"></div>
     <% end %>
   </div>
 <% end %>
+
+<script type="text/javascript">
+  $(".ajax-uncollect").on("click", function(event) {
+    var id = event.target.parentNode.parentNode.id;
+    $.ajax({
+      url: "/posts/" + id + "/uncollect",
+      method: "POST",
+      dataType: "json",
+      success: function(data) {
+        $("#" + data["id"]).remove();
+        $("#" + data["id"] + "div").remove();
+      }
+    });
+  });
+</script>

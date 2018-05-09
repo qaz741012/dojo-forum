@@ -1,15 +1,13 @@
 <div>
   <div class="post-title mb-3 p-3">
     <h2 class="d-inline-block"><%= @post.title %></h2>
-    <div class="d-inline-block float-right">
+    <div class="d-inline-block float-right ajax-collect-function" id="<%= @post.id %>">
       <% if current_user.collected_post?(@post) %>
-        <%= link_to "Uncollect", uncollect_post_path(@post), method: :post,
-        class: "btn btn-secondary" %>
+        <button class="ajax-uncollect btn btn-outline-secondary">Uncollect</button>
       <% else %>
-        <%= link_to "Collect", collect_post_path(@post), method: :post,
-        class: "btn btn-secondary" %>
+        <button class="ajax-collect btn btn-secondary">Collect</button>
       <% end %>
-      <%= link_to "Comment", "#comment-area", class: "btn btn-secondary" %>
+      <a href="#comment-area" class="btn btn-secondary">Comment</a>
     </div>
     <div>
       <% @categories.each do |category| %>
@@ -107,3 +105,41 @@
     </div>
   <% end %>
 </div>
+
+<script type="text/javascript">
+  $(".ajax-collect-function").on("click", ".ajax-uncollect", function(event) {
+    var id = event.target.parentNode.id;
+    $.ajax({
+      url: "/posts/" + id + "/uncollect",
+      method: "POST",
+      dataType: "json",
+      success: function(data) {
+        $("#" + data["id"]).html($("#collect-template").html());
+      }
+    });
+  });
+</script>
+
+<script type="text/javascript">
+$(".ajax-collect-function").on("click", ".ajax-collect", function(event) {
+  var id = event.target.parentNode.id;
+  $.ajax({
+    url: "/posts/" + id + "/collect",
+    method: "POST",
+    dataType: "json",
+    success: function(data) {
+      $("#" + data["id"]).html($("#uncollect-template").html());
+    }
+  });
+});
+</script>
+
+<script type="text/template" id="collect-template">
+  <button class="ajax-collect btn btn-secondary">Collect</button>
+  <a href="#comment-area" class="btn btn-secondary">Comment</a>
+</script>
+
+<script type="text/template" id="uncollect-template">
+  <button class="ajax-uncollect btn btn-outline-secondary">Uncollect</button>
+  <a href="#comment-area" class="btn btn-secondary">Comment</a>
+</script>
