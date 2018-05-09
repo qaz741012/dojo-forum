@@ -23,6 +23,9 @@ class UsersController < ApplicationController
 
   def my_post
     @posts = @user.posts.where(draft?: false)
+    if !current_user.admin?
+      @posts = @posts.auth_posts(current_user)
+    end
   end
 
   def my_comment

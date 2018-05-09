@@ -10,7 +10,6 @@
         class: "btn btn-secondary" %>
       <% end %>
       <%= link_to "Comment", "#comment-area", class: "btn btn-secondary" %>
-      <span class="badge badge-warning"><%= "draft: " + @post.draft?.to_s %></span>
     </div>
     <div>
       <% @categories.each do |category| %>
