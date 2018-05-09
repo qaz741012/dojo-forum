@@ -19,12 +19,38 @@
       </div>
     </div>
   </div>
-  <div class="feeds-down">
-    <div class="">
-
+  <div class="feeds-down text-center pt-5">
+    <div class="d-inline-block">
+      <div class="feeds-most-title">
+        <h3>Chatterbox</h3>
+      </div>
+      <div>
+        <% i = 1 %>
+        <% @chatterboxes.each do |chatterbox| %>
+          <div class="row">
+            <div class="offset-md-2 col-md-2 text-right"><%= "#{i}." %></div>
+            <div class="col-md-4 text-left"><%= chatterbox.name %></div>
+            <div class="col-md-2 text-left"><%= chatterbox.replies_count %></div>
+          </div>
+          <% i += 1 %>
+        <% end %>
+      </div>
     </div>
-    <div class="">
-
+    <div class="d-inline-block">
+      <div class="feeds-most-title">
+        <h3>Most Popular Post</h3>
+      </div>
+      <div class="feeds-most-box">
+        <% j = 1 %>
+        <% @most_popular_posts.each do |post| %>
+        <div class="row">
+          <div class="col-md-1 text-right"><%= "#{j}." %></div>
+          <div class="col-md-8 text-left"><%= post.title %></div>
+          <div class="col-md-2 text-left"><%= post.replies_count %></div>
+        </div>
+        <% j += 1 %>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>

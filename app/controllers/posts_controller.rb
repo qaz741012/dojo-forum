@@ -143,7 +143,8 @@ class PostsController < ApplicationController
     @post_count = Post.count
     @reply_count = Reply.count
 
-    
+    @chatterboxes = User.order(replies_count: :desc).limit(10)
+    @most_popular_posts = Post.order(replies_count: :desc).limit(10)
   end
 
   private
