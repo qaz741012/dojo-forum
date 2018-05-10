@@ -41,6 +41,13 @@ class Api::V1::PostsController < ApiController
   def update
     @post = Post.find_by(id: params[:id])
     @categories = params[:categories][1..-2].split(", ")
+
+    if current_user != @post.user
+      render json: {
+        message: "You don't have authority to this post."
+      }, status: 401
+    end
+
     if @post.update(post_params)
       @post.post_categories.destroy_all
       @categories.each do |category|
@@ -55,10 +62,17 @@ class Api::V1::PostsController < ApiController
 
   def destroy
     @post = Post.find_by(id: params[:id])
-    @post.destroy
-    render json: {
-      message: "Post was successfully deleted."
-    }
+
+    if current_user == @post.user || current_user.admin?
+      @post.destroy
+      render json: {
+        message: "Post was successfully deleted."
+      }
+    else
+      render json: {
+        message: "You don't have authority to this post."
+      }, status: 401
+    end
   end
 
   private
