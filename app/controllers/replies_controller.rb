@@ -52,11 +52,11 @@ class RepliesController < ApplicationController
     reply = Reply.find(params[:id])
     if current_user != reply.user
       flash[:alert] = "You don't have authority to this post."
+      redirect_back(fallback_location: root_path)
     else
       reply.destroy
-      flash[:notice] = "Comment was successfully deleted."
+      render json: { id: params[:id] }
     end
-    redirect_back(fallback_location: root_path)
   end
 
   private

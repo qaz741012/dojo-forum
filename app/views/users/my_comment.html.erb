@@ -19,15 +19,14 @@
             </button>
           <% end %>
           <% if current_user == @user || current_user.admin? %>
-            <%= link_to post_reply_path(reply.post, reply), method: :delete,
-            class: "btn btn-light", data: { confirm: "Are you sure?" } do %>
-              <%= icon("fas", "times") %>
-            <% end %>
+            <button class="btn btn-light ajax-comment-destroy" data-confirm="Are you sure?">
+              <i class="fas fa-times"></i>
+            </button>
           <% end %>
         </div>
       </div>
     </div>
-    <div></div>
+    <div id="<%= reply.id %>div"></div>
   <% end %>
 </div>
 
@@ -78,6 +77,25 @@
   });
 </script>
 
+<script type="text/javascript">
+$(".edit-comment").on("click", ".ajax-comment-destroy", function(event) {
+  var id = event.target.parentNode.parentNode.parentNode.id;
+  if(id == ""){
+    var id = event.target.parentNode.parentNode.parentNode.parentNode.id;
+  }
+  postId = $("#" + id).attr("class").split(" ")[0].slice(5);
+  $.ajax({
+    url: "/posts/" + postId + "/replies/" + id,
+    method: "DELETE",
+    dataType: "json",
+    success: function(data) {
+      $("#" + data["id"]).remove();
+      $("#" + data["id"] + "div").remove();
+    }
+  });
+});
+</script>
+
 <script type="text/template" id="edit-comment-template">
   <form>
     <div class="input-group">
@@ -96,5 +114,8 @@
 <script type="text/template" id="edit-icon-template">
   <button class="btn btn-light ajax-comment-edit">
     <i class="far fa-edit"></i>
+  </button>
+  <button class="btn btn-light ajax-comment-destroy" data-confirm="Are you sure?">
+    <i class="fas fa-times"></i>
   </button>
 </script>
