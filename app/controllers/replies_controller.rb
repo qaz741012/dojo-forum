@@ -24,6 +24,9 @@ class RepliesController < ApplicationController
       flash[:alert] = "You don't have authority to this post."
       redirect_back(fallback_location: root_path)
     end
+
+    render json: { id: @reply.id,
+                   comment: @reply.comment }
   end
 
   def update

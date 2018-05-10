@@ -2,7 +2,7 @@
 
 <div class="user-profile-comment px-5 pt-4 position-relative">
   <% @replies.each do |reply| %>
-    <div class="row mt-3">
+    <div class="post-<%= reply.post.id %> row mt-3" id="<%= reply.id %>">
       <div class="col-md-8">
         <h4>
           <%= link_to reply.post.title, post_path(reply.post), class: "link-style" %>
@@ -12,11 +12,11 @@
         </div>
       </div>
       <div class="col-md-4 position-relative">
-        <div class="edit">
+        <div class="edit-comment">
           <% if current_user == @user %>
-            <%= link_to edit_post_reply_path(reply.post, reply), class: "btn btn-light" do %>
-              <%= icon("far", "edit") %>
-            <% end %>
+            <button class="btn btn-light ajax-comment-edit">
+              <i class="far fa-edit"></i>
+            </button>
           <% end %>
           <% if current_user == @user || current_user.admin? %>
             <%= link_to post_reply_path(reply.post, reply), method: :delete,
@@ -30,3 +30,33 @@
     <div></div>
   <% end %>
 </div>
+
+<script type="text/javascript">
+  $(".edit-comment").on("click", ".ajax-comment-edit", function(event) {
+    var id = event.target.parentNode.parentNode.parentNode.id;
+    if(id == ""){
+      var id = event.target.parentNode.parentNode.parentNode.parentNode.id;
+    }
+    postId = $("#" + id).attr("class").split(" ")[0].slice(5);
+    $.ajax({
+      url: "/posts/" + postId + "/replies/" + id + "/edit",
+      method: "GET",
+      dataType: "json",
+      success: function(data) {
+        var editForm = $("#" + data["id"]).find(".user-profile-comment-content");
+        editForm.html($("#edit-comment-template").html());
+        editForm.find(".update-comment").html(data["comment"]);
+        $("#" + data["id"]).find(".ajax-comment-edit").html("<i class='fas fa-check'></i>");
+      }
+    });
+  });
+</script>
+
+<script type="text/template" id="edit-comment-template">
+  <form>
+    <div class="input-group">
+      <textarea type="text_area" class="update-comment form-control py-3 px-2"
+      rows="5"></textarea>
+    </div>
+  </form>
+</script>
