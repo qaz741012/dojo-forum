@@ -66,30 +66,17 @@ class UsersController < ApplicationController
   end
 
   def add_friend
-    if current_user != @user
-      friendship1 = current_user.friendships.build( friend_id: params[:id],
-                                                    status: "request" )
-      if friendship1.save
-        flash[:notice] = "Successfully sent request."
-        friendship2 = @user.friendships.build( friend_id: current_user.id,
-                                               status: "unconfirm" )
-        friendship2.save
-      else
-        flash[:alert] = friendship1.errors.full_messages.to_sentence
-      end
-    else
-      flash[:alert] = "Can't send request to yourself."
-    end
-    redirect_back(fallback_location: root_path)
+    friendship1 = current_user.friendships.create( friend_id: params[:id],
+                                                   status: "request" )
+    friendship2 = @user.friendships.create( friend_id: current_user.id,
+                                            status: "unconfirm" )
+    render json: { user_id: params[:id] }
   end
 
   def cancel_request
     friendship = current_user.friendships.find_by_friend_id(params[:id])
-    if friendship
-      friendship.destroy
-      flash[:notice] = "Successfully cancelled the request."
-      redirect_back(fallback_location: root_path)
-    end
+    friendship.destroy
+    render json: { user_id: params[:id] }
   end
 
   def confirm_friend
@@ -97,8 +84,7 @@ class UsersController < ApplicationController
     friendship1.update(status: "confirm")
     friendship2 = @user.friendships.find_by_friend_id(current_user.id)
     friendship2.update(status: "confirm")
-    flash[:notice] = "Confirmed the friend."
-    redirect_back(fallback_location: root_path)
+    render json: { user_id: params[:id] }
   end
 
   private

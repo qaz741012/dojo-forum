@@ -1,13 +1,10 @@
 <% case current_user.friend_status(user) %>
 <% when nil %>
-  <%= link_to "Add Friend", add_friend_user_path(user), method: :post,
-   class: "btn btn-secondary d-block w-100" %>
+  <button class="btn btn-secondary d-block w-100 ajax-add-friend">Add Friend</button>
 <% when "request" %>
-  <%= link_to "Cancel Request", cancel_request_user_path(user), method: :post,
-   class: "btn btn-secondary d-inline-block w-100" %>
+  <button class="btn btn-secondary d-inline-block w-100 ajax-cancel-request">Cancel Request</button>
 <% when "unconfirm" %>
-  <%= link_to "Accept", confirm_friend_user_path(user), method: :post,
-   class: "btn btn-secondary d-block w-100" %>
+  <button class="btn btn-secondary d-block w-100 ajax-accept">Accept</button>
 <% when "confirm" %>
   <span class="btn btn-secondary disabled d-block w-100">Friend</span>
 <% end %>

@@ -23,7 +23,7 @@
       <h3 class="mx-auto mt-1 text-center">
         <%= link_to @post.user.name, my_post_user_path(@post.user), class: "link-style" %>
       </h3>
-      <div class="mt-3 w-100 post-show-add-friend">
+      <div class="user-<%= @post.user.id %> mt-3 w-100 post-show-add-friend">
         <% if current_user != @post.user %>
           <%= render partial: "shared/add_friend", locals: { user: @post.user } %>
         <% end %>
@@ -65,7 +65,7 @@
       <h3 class="mx-auto mt-1 text-center">
         <%= link_to reply.user.name, my_post_user_path(reply.user), class: "link-style" %>
       </h3>
-      <div class="mt-3 w-100 post-show-add-friend">
+      <div class="user-<%= reply.user.id %> mt-3 w-100 post-show-add-friend">
         <% if current_user != reply.user %>
           <%= render partial: "shared/add_friend", locals: { user: reply.user } %>
         <% end %>
@@ -106,6 +106,7 @@
   <% end %>
 </div>
 
+<!-- =================== Collect AJAX ===================== -->
 <script type="text/javascript">
   $(".ajax-collect-function").on("click", ".ajax-uncollect", function(event) {
     var id = event.target.parentNode.id;
@@ -142,4 +143,59 @@ $(".ajax-collect-function").on("click", ".ajax-collect", function(event) {
 <script type="text/template" id="uncollect-template">
   <button class="ajax-uncollect btn btn-outline-secondary">Uncollect</button>
   <a href="#comment-area" class="btn btn-secondary">Comment</a>
+</script>
+
+<!-- =================== Friend AJAX ===================== -->
+<script type="text/javascript">
+  $(".post-show-add-friend").on("click", ".ajax-add-friend", function(event) {
+    var userId = event.target.parentNode.classList.item(0).slice(5);
+    $.ajax({
+      url: "/users/" + userId + "/add_friend",
+      method: "POST",
+      dataType: "json",
+      success: function(data) {
+        $(".user-" + data["user_id"]).html($("#cancel-request-template").html());
+      }
+    });
+  });
+</script>
+
+<script type="text/javascript">
+  $(".post-show-add-friend").on("click", ".ajax-cancel-request", function(event) {
+    var userId = event.target.parentNode.classList.item(0).slice(5);
+    $.ajax({
+      url: "/users/" + userId + "/cancel_request",
+      method: "POST",
+      dataType: "json",
+      success: function(data) {
+        $(".user-" + data["user_id"]).html($("#add-friend-template").html());
+      }
+    });
+  });
+</script>
+
+<script type="text/javascript">
+  $(".post-show-add-friend").on("click", ".ajax-accept", function(event) {
+    var userId = event.target.parentNode.classList.item(0).slice(5);
+    $.ajax({
+      url: "/users/" + userId + "/confirm_friend",
+      method: "POST",
+      dataType: "json",
+      success: function(data) {
+        $(".user-" + data["user_id"]).html($("#friend-template").html());
+      }
+    });
+  });
+</script>
+
+<script type="text/template" id="add-friend-template">
+  <button class="btn btn-secondary d-block w-100 ajax-add-friend">Add Friend</button>
+</script>
+
+<script type="text/template" id="cancel-request-template">
+  <button class="btn btn-secondary d-inline-block w-100 ajax-cancel-request">Cancel Request</button>
+</script>
+
+<script type="text/template" id="friend-template">
+  <span class="btn btn-secondary disabled d-block w-100">Friend</span>
 </script>
