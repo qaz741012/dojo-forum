@@ -38,4 +38,10 @@ Rails.application.routes.draw do
     resources :users, only: [:index, :edit, :update]
     resources :categories, only: [:index, :create, :update, :destroy]
   end
+
+  namespace :api, defaults: { format: :json } do
+    namespace :v1 do
+      resources :posts, except: [:new, :edit]
+    end
+  end
 end
