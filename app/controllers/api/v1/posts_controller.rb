@@ -11,12 +11,16 @@ class Api::V1::PostsController < ApiController
 
   def show
     @post = Post.find_by(id: params[:id])
-    if @post
-      render json: @post
-    else
+    if !@post
       render json: {
         message: "Can't find the post."
       }, status: 400
+    else
+      if !@post.auth_user?(current_user)
+        render json: {
+          message: "You don't have authority to this post."
+        }, status: 401
+      end
     end
   end
 
