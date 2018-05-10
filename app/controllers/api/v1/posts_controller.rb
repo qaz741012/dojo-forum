@@ -25,12 +25,12 @@ class Api::V1::PostsController < ApiController
   end
 
   def create
-    @post = Post.new(post_params)
+    @post = current_user.posts.build(post_params)
+    @categories = params[:categories][1..-2].split(", ")
     if @post.save
-      render json: {
-        message: "Post was successfully created.",
-        result: @post
-      }
+      @categories.each do |category|
+        @post.post_categories.create(category_id: category)
+      end
     else
       render json: {
         errors: @post.errors
