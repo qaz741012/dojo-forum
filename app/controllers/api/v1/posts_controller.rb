@@ -3,9 +3,9 @@ class Api::V1::PostsController < ApiController
 
   def index
     if current_user
-      @posts = Post.auth_posts(current_user)
+      @posts = Post.includes(:categories).auth_posts(current_user)
     else
-      @posts = Post.public_posts
+      @posts = Post.includes(:categories).public_posts
     end
   end
 
