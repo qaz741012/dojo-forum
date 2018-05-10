@@ -40,11 +40,12 @@ class Api::V1::PostsController < ApiController
 
   def update
     @post = Post.find_by(id: params[:id])
+    @categories = params[:categories][1..-2].split(", ")
     if @post.update(post_params)
-      render json: {
-        message: "Post was successfully updated.",
-        result: @post
-      }
+      @post.post_categories.destroy_all
+      @categories.each do |category|
+        @post.post_categories.create(category_id: category)
+      end
     else
       render json: {
         errors: @post.errors
