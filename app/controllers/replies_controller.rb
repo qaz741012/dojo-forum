@@ -19,14 +19,16 @@ class RepliesController < ApplicationController
   end
 
   def edit
-    @reply = Reply.find(params[:id])
-    if current_user != @reply.user
+    reply = Reply.find(params[:id])
+    if current_user != reply.user
       flash[:alert] = "You don't have authority to this post."
       redirect_back(fallback_location: root_path)
     end
 
-    render json: { id: @reply.id,
-                   comment: @reply.comment }
+    render json: {
+      id: reply.id,
+      comment: reply.comment
+    }
   end
 
   def update
@@ -34,14 +36,12 @@ class RepliesController < ApplicationController
     reply = Reply.find(params[:id])
 
     if post.auth_user?(current_user)
-      if reply.update(reply_params)
-        post.update(last_replied_time: reply.updated_at)
-        flash[:notice] = "Comment was successfully updated."
-        redirect_to post_path(reply.post)
-      else
-        flash[:alert] = reply.errors.full_messages.to_sentence
-        redirect_back(fallback_location: root_path)
-      end
+      reply.update(reply_params)
+      post.update(last_replied_time: reply.updated_at)
+      render json: {
+        id: reply.id,
+        comment: reply.comment
+      }
     else
       flash[:alert] = "You don't have authority to this post."
       redirect_back(fallback_location: root_path)

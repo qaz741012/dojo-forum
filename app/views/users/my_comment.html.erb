@@ -45,8 +45,34 @@
       success: function(data) {
         var editForm = $("#" + data["id"]).find(".user-profile-comment-content");
         editForm.html($("#edit-comment-template").html());
-        editForm.find(".update-comment").html(data["comment"]);
-        $("#" + data["id"]).find(".ajax-comment-edit").html("<i class='fas fa-check'></i>");
+        editForm.find(".update-comment").val(data["comment"]);
+        $("#" + data["id"]).find(".edit-comment").html($("#update-icon-template").html());
+      }
+    });
+  });
+</script>
+
+<script type="text/javascript">
+  $(".edit-comment").on("click", ".ajax-comment-update", function(event) {
+    var id = event.target.parentNode.parentNode.parentNode.id;
+    if(id == ""){
+      var id = event.target.parentNode.parentNode.parentNode.parentNode.id;
+    }
+    postId = $("#" + id).attr("class").split(" ")[0].slice(5);
+    $.ajax({
+      url: "/posts/" + postId + "/replies/" + id,
+      method: "PATCH",
+      dataType: "json",
+      data: {
+        reply: {
+          comment: $("#" + id).find(".update-comment").val()
+        }
+      },
+      success: function(updateData) {
+        var editForm = $("#" + updateData["id"]).find(".user-profile-comment-content");
+        editForm.html("<p class='py-3 px-2'></p>");
+        editForm.find("p").html(updateData["comment"]);
+        $("#" + updateData["id"]).find(".edit-comment").html($("#edit-icon-template").html());
       }
     });
   });
@@ -59,4 +85,16 @@
       rows="5"></textarea>
     </div>
   </form>
+</script>
+
+<script type="text/template" id="update-icon-template">
+  <button class="btn btn-light ajax-comment-update">
+    <i class="fas fa-check"></i>
+  </button>
+</script>
+
+<script type="text/template" id="edit-icon-template">
+  <button class="btn btn-light ajax-comment-edit">
+    <i class="far fa-edit"></i>
+  </button>
 </script>
