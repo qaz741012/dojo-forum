@@ -13,7 +13,7 @@
             <h6 class="text-center">
               <%= link_to request.friend.name, my_post_user_path(request.friend), class: "link-style" %>
             </h6>
-            <div class="mb-4">
+            <div class="user-<%= request.friend.id %> mb-4 my-friend-add-friend">
               <% if current_user == @user %>
                 <%= render partial: "shared/add_friend", locals: { user: request.friend } %>
               <% end %>
@@ -33,10 +33,10 @@
             <h6 class="text-center">
               <%= link_to unconfirm.friend.name, my_post_user_path(unconfirm.friend), class: "link-style" %>
             </h6>
-            <div class="mb-4">
+            <div class="user-<%= unconfirm.friend.id %> mb-4 my-friend-add-friend">
               <% if current_user == @user %>
                 <%= render partial: "shared/add_friend", locals: { user: unconfirm.friend } %>
-                <%= link_to "Ignore", "#", class: "btn btn-secondary d-block w-100 mt-2" %>
+                <button class="btn btn-secondary d-block w-100 mt-2 ajax-ignore">Ignore</button>
               <% end %>
             </div>
           </div>
@@ -45,7 +45,7 @@
     </div>
     <div class="friend-list px-5 pt-4">
       <h5 class="text-center mb-3">Your friends</h5>
-      <div class="row">
+      <div class="row confirm-friends">
         <% @confirms.each do |confirm| %>
           <div class="col-md-2">
             <div class="px-4 mb-2">
@@ -60,3 +60,63 @@
     </div>
   </div>
 <% end %>
+
+<!-- =================== Friend AJAX ===================== -->
+<script type="text/javascript">
+  $(".my-friend-add-friend").on("click", ".ajax-cancel-request", function(event) {
+    var userId = event.target.parentNode.classList.item(0).slice(5);
+    $.ajax({
+      url: "/users/" + userId + "/cancel_request",
+      method: "POST",
+      dataType: "json",
+      success: function(data) {
+        $(".user-" + data["user_id"]).parent().remove();
+      }
+    });
+  });
+</script>
+
+<script type="text/javascript">
+  $(".my-friend-add-friend").on("click", ".ajax-ignore", function(event) {
+    var userId = event.target.parentNode.classList.item(0).slice(5);
+    $.ajax({
+      url: "/users/" + userId + "/ignore",
+      method: "POST",
+      dataType: "json",
+      success: function(data) {
+        $(".user-" + data["user_id"]).parent().remove();
+      }
+    });
+  });
+</script>
+
+<script type="text/javascript">
+$(".my-friend-add-friend").on("click", ".ajax-accept", function(event) {
+  var userId = event.target.parentNode.classList.item(0).slice(5);
+  $.ajax({
+    url: "/users/" + userId + "/confirm_friend",
+    method: "POST",
+    dataType: "json",
+    success: function(data) {
+      $(".user-" + data["user_id"]).parent().remove();
+
+      $(".confirm-friends").append($("#confirm-friend-template").html());
+      var friendBox = $(".confirm-friends").children().last();
+      friendBox.find("img").attr("src", data["user_avatar_url"]);
+      friendBox.find("a").html(data["user_name"]);
+      friendBox.find("a").attr("href", "/users/" + data["user_id"] + "/my_post");
+    }
+  });
+});
+</script>
+
+<script type="text/template" id="confirm-friend-template">
+  <div class="col-md-2">
+    <div class="px-4 mb-2">
+      <img class="mw-100">
+    </div>
+    <h6 class="text-center mb-4">
+      <a class="link-style"></a>
+    </h6>
+  </div>
+</script>

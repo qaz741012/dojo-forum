@@ -84,6 +84,14 @@ class UsersController < ApplicationController
     friendship1.update(status: "confirm")
     friendship2 = @user.friendships.find_by_friend_id(current_user.id)
     friendship2.update(status: "confirm")
+    render json: { user_id: params[:id],
+                   user_avatar_url: @user.avatar.url,
+                   user_name: @user.name }
+  end
+
+  def ignore
+    friendship = current_user.friendships.find_by_friend_id(params[:id])
+    friendship.update(status: "ignore")
     render json: { user_id: params[:id] }
   end
 

@@ -13,7 +13,7 @@
       <% if current_user == user %>
         <%= link_to "Edit", edit_user_path(user), class: "btn btn-secondary" %>
       <% else %>
-        <div class="d-inline-block" style="max-width: 180px;">
+        <div class="user-<%= user.id %> d-inline-block user-profile-add-friend" style="max-width: 180px;">
           <%= render partial: "shared/add_friend", locals: { user: user } %>
         </div>
       <% end %>
@@ -47,3 +47,58 @@
     <% end %>
   </ul>
 </div>
+
+<!-- =================== Friend AJAX ===================== -->
+<script type="text/javascript">
+  $(".user-profile-add-friend").on("click", ".ajax-add-friend", function(event) {
+    var userId = event.target.parentNode.classList.item(0).slice(5);
+    $.ajax({
+      url: "/users/" + userId + "/add_friend",
+      method: "POST",
+      dataType: "json",
+      success: function(data) {
+        $(".user-" + data["user_id"]).html($("#cancel-request-template").html());
+      }
+    });
+  });
+</script>
+
+<script type="text/javascript">
+  $(".user-profile-add-friend").on("click", ".ajax-cancel-request", function(event) {
+    var userId = event.target.parentNode.classList.item(0).slice(5);
+    $.ajax({
+      url: "/users/" + userId + "/cancel_request",
+      method: "POST",
+      dataType: "json",
+      success: function(data) {
+        $(".user-" + data["user_id"]).html($("#add-friend-template").html());
+      }
+    });
+  });
+</script>
+
+<script type="text/javascript">
+  $(".user-profile-add-friend").on("click", ".ajax-accept", function(event) {
+    var userId = event.target.parentNode.classList.item(0).slice(5);
+    $.ajax({
+      url: "/users/" + userId + "/confirm_friend",
+      method: "POST",
+      dataType: "json",
+      success: function(data) {
+        $(".user-" + data["user_id"]).html($("#friend-template").html());
+      }
+    });
+  });
+</script>
+
+<script type="text/template" id="add-friend-template">
+  <button class="btn btn-secondary d-block w-100 ajax-add-friend">Add Friend</button>
+</script>
+
+<script type="text/template" id="cancel-request-template">
+  <button class="btn btn-secondary d-inline-block w-100 ajax-cancel-request">Cancel Request</button>
+</script>
+
+<script type="text/template" id="friend-template">
+  <span class="btn btn-secondary disabled d-block w-100">Friend</span>
+</script>

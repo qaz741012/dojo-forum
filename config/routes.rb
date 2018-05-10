@@ -27,6 +27,7 @@ Rails.application.routes.draw do
       post :add_friend
       post :cancel_request
       post :confirm_friend
+      post :ignore
     end
   end
 
