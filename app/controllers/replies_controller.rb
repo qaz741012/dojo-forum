@@ -5,7 +5,7 @@ class RepliesController < ApplicationController
     reply = post.replies.build(reply_params)
     reply.user_id = current_user.id
 
-    if post.auth_user?(current_user)
+    if post.auth_user?(current_user) || current_user.admin?
       if reply.save
         post.update(last_replied_time: reply.created_at)
         flash[:notice] = "Comment was successfully replied."
@@ -35,7 +35,7 @@ class RepliesController < ApplicationController
     post = Post.find(params[:post_id])
     reply = Reply.find(params[:id])
 
-    if post.auth_user?(current_user)
+    if post.auth_user?(current_user) || current_user.admin?
       reply.update(reply_params)
       post.update(last_replied_time: reply.updated_at)
       render json: {

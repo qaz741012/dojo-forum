@@ -23,7 +23,9 @@ Category.destroy_all
 puts "Deleted all categories."
 
 category_names = ["Gossiping", "Game", "Tech", "Animal", "Emotion", "Marvel", "Travel"]
+id = 1
 category_names.each do |category_name|
-  Category.create( name: category_name )
+  Category.create( id: id, name: category_name )
+  id += 1
 end
 puts "Created default categories."
