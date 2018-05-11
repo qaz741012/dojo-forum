@@ -57,40 +57,41 @@
 </div>
 
 <% @replies.each do |reply| %>
-  <div class="row mb-3 mx-4">
-    <div class="col-md-2">
-      <div class="w-100 m-auto">
-        <%= image_tag reply.user.avatar.url, class: "mw-100" if reply.user.avatar? %>
+  <div class="post-<%= reply.post.id %>" id="<%= reply.id %>">
+    <div class="row mb-3 mx-4">
+      <div class="col-md-2">
+        <div class="w-100 m-auto">
+          <%= image_tag reply.user.avatar.url, class: "mw-100" if reply.user.avatar? %>
+        </div>
+        <h3 class="mx-auto mt-1 text-center">
+          <%= link_to reply.user.name, my_post_user_path(reply.user), class: "link-style" %>
+        </h3>
+        <div class="user-<%= reply.user.id %> mt-3 w-100 post-show-add-friend">
+          <% if current_user != reply.user %>
+            <%= render partial: "shared/add_friend", locals: { user: reply.user } %>
+          <% end %>
+        </div>
       </div>
-      <h3 class="mx-auto mt-1 text-center">
-        <%= link_to reply.user.name, my_post_user_path(reply.user), class: "link-style" %>
-      </h3>
-      <div class="user-<%= reply.user.id %> mt-3 w-100 post-show-add-friend">
-        <% if current_user != reply.user %>
-          <%= render partial: "shared/add_friend", locals: { user: reply.user } %>
+      <div class="offset-md-1 col-md-9">
+        <div class="px-2 post-comment-content">
+          <p><%= reply.comment %></p>
+        </div>
+      </div>
+    </div>
+    <div class="position-relative">
+      <div class="post-edit">
+        <% if reply.user == current_user %>
+          <button class="btn btn-light ajax-comment-edit">
+            <i class="far fa-edit"></i>
+          </button>
+          <button class="btn btn-light ajax-comment-destroy" data-confirm="Are you sure?">
+            <i class="fas fa-times"></i>
+          </button>
         <% end %>
       </div>
     </div>
-    <div class="offset-md-1 col-md-9">
-      <div class="px-2">
-        <p><%= reply.comment %></p>
-      </div>
-    </div>
+    <div style="height: 1px; clear: both;" class="bg-secondary my-4"></div>
   </div>
-  <div class="position-relative">
-    <div class="post-edit">
-      <% if reply.user == current_user %>
-        <%= link_to edit_post_reply_path(@post, reply), class: "btn btn-light" do %>
-          <%= icon("far", "edit") %>
-        <% end %>
-        <%= link_to post_reply_path(@post, reply), method: :delete,
-        class: "btn btn-light", data: { confirm: "Are you sure?" } do %>
-          <%= icon("fas", "times") %>
-        <% end %>
-      <% end %>
-    </div>
-  </div>
-  <div style="height: 1px; clear: both;" class="bg-secondary my-4"></div>
 <% end %>
 
 <div class="text-center" style="margin-top: 100px;">
@@ -105,6 +106,96 @@
     </div>
   <% end %>
 </div>
+
+<!-- =================== Comment AJAX ===================== -->
+<script type="text/javascript">
+  $(".post-edit").on("click", ".ajax-comment-edit", function(event) {
+    var id = event.target.parentNode.parentNode.parentNode.id;
+    if(id == ""){
+      var id = event.target.parentNode.parentNode.parentNode.parentNode.id;
+    }
+    postId = $("#" + id).attr("class").slice(5);
+    $.ajax({
+      url: "/posts/" + postId + "/replies/" + id + "/edit",
+      method: "GET",
+      dataType: "json",
+      success: function(data) {
+        var editForm = $("#" + data["id"]).find(".post-comment-content");
+        editForm.html($("#edit-comment-template").html());
+        editForm.find(".update-comment").val(data["comment"]);
+        $("#" + data["id"]).find(".post-edit").html($("#update-icon-template").html());
+      }
+    });
+  });
+</script>
+
+<script type="text/javascript">
+  $(".post-edit").on("click", ".ajax-comment-update", function(event) {
+    var id = event.target.parentNode.parentNode.parentNode.id;
+    if(id == ""){
+      var id = event.target.parentNode.parentNode.parentNode.parentNode.id;
+    }
+    postId = $("#" + id).attr("class").slice(5);
+    $.ajax({
+      url: "/posts/" + postId + "/replies/" + id,
+      method: "PATCH",
+      dataType: "json",
+      data: {
+        reply: {
+          comment: $("#" + id).find(".update-comment").val()
+        }
+      },
+      success: function(updateData) {
+        var editForm = $("#" + updateData["id"]).find(".post-comment-content");
+        editForm.html("<p class='py-3 px-2'></p>");
+        editForm.find("p").html(updateData["comment"]);
+        $("#" + updateData["id"]).find(".post-edit").html($("#edit-icon-template").html());
+      }
+    });
+  });
+</script>
+
+<script type="text/javascript">
+$(".post-edit").on("click", ".ajax-comment-destroy", function(event) {
+  var id = event.target.parentNode.parentNode.parentNode.id;
+  if(id == ""){
+    var id = event.target.parentNode.parentNode.parentNode.parentNode.id;
+  }
+  postId = $("#" + id).attr("class").split(" ")[0].slice(5);
+  $.ajax({
+    url: "/posts/" + postId + "/replies/" + id,
+    method: "DELETE",
+    dataType: "json",
+    success: function(data) {
+      $("#" + data["id"]).remove();
+    }
+  });
+});
+</script>
+
+<script type="text/template" id="edit-comment-template">
+  <form>
+    <div class="input-group">
+      <textarea type="text_area" class="update-comment form-control py-3 px-2"
+      rows="4"></textarea>
+    </div>
+  </form>
+</script>
+
+<script type="text/template" id="update-icon-template">
+  <button class="btn btn-light ajax-comment-update">
+    <i class="fas fa-check"></i>
+  </button>
+</script>
+
+<script type="text/template" id="edit-icon-template">
+  <button class="btn btn-light ajax-comment-edit">
+    <i class="far fa-edit"></i>
+  </button>
+  <button class="btn btn-light ajax-comment-destroy" data-confirm="Are you sure?">
+    <i class="fas fa-times"></i>
+  </button>
+</script>
 
 <!-- =================== Collect AJAX ===================== -->
 <script type="text/javascript">
