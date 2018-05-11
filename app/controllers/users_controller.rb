@@ -22,22 +22,16 @@ class UsersController < ApplicationController
   end
 
   def my_post
-    @posts = @user.posts.where(draft?: false)
-    if !current_user.admin?
-      @posts = @posts.auth_posts(current_user)
-    end
+    @posts = @user.posts.where(draft?: false).auth_posts(current_user)
   end
 
   def my_comment
-    @replies = Reply.includes(:post).where( user_id: @user.id)
-    if !current_user.admin?
-      @replies = Reply.includes(:post).where( user_id: @user.id,
-                                              post_id: Post.all.auth_posts(current_user).pluck(:id))
-    end
+    @replies = Reply.includes(:post).where( user_id: @user.id,
+                                            post_id: Post.all.auth_posts(current_user).pluck(:id))
   end
 
   def my_collect
-    if current_user == @user || current_user.admin?
+    if current_user == @user
       @collects = Collect.includes(:post).where(user_id: @user.id)
     else
       flash[:alert] = "You don't have the authority."
@@ -46,7 +40,7 @@ class UsersController < ApplicationController
   end
 
   def my_draft
-    if current_user == @user || current_user.admin?
+    if current_user == @user
       @posts = @user.posts.where(draft?: true)
     else
       flash[:alert] = "You don't have the authority."
@@ -55,7 +49,7 @@ class UsersController < ApplicationController
   end
 
   def my_friend
-    if current_user == @user || current_user.admin?
+    if current_user == @user
       @requests = Friendship.includes(:friend).where(user_id: @user.id, status: "request")
       @unconfirms = Friendship.includes(:friend).where(user_id: @user.id, status: "unconfirm")
       @confirms = Friendship.includes(:friend).where(user_id: @user.id, status: "confirm")
