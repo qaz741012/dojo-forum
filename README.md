@@ -59,6 +59,10 @@ $ rails db:migrate
 (以下可根據個人需求做設定)
 
 建立初始後台管理者及預設文章分類
+
+- 後台帳號：admin@example.com
+- 後台密碼：12345678
+
 ```
 $ rails db:seed
 ```
