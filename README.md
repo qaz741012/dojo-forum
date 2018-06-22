@@ -1,24 +1,72 @@
-# README
+# Dojo Forum
+實作一個主題分類論壇
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## 目錄
+- [A. 功能](#A)
+- [B. 設定](#B)
+- [C. 網站](#C)
 
-Things you may want to cover:
 
-* Ruby version
+<h2 id="A">A. 功能</h2>
 
-* System dependencies
+### 主題貼文
 
-* Configuration
+- 在首頁，使用者能瀏覽文章總表，並可依照文章主題篩選文章，或是以最新回覆時間、回覆數、瀏覽數來排序文章。
+- 使用者張貼文章時，能上傳一張相片、選擇文章權限、文章分類，並決定儲存成草稿或發佈貼文。
+- 使用者能在有權限閱讀的貼文下方留言，並且能編輯與刪除自己的留言。
+- 使用者能收藏喜愛的文章，也能取消收藏。
 
-* Database creation
+### 好友
+- 使用者能對其他使用者發出好友邀請。
+- 使用者能在個人頁面查看已成為好友的人、已送出的好友邀請、以及回應或忽略其他人的好友邀請。
 
-* Database initialization
+### 文章權限
+- 使用者在發佈文章時能設定文章權限
+  - 公開貼文：所有人都能瀏覽及留言。
+  - 好友權限：僅好友能瀏覽及留言。
+  - 本人：僅本人能瀏覽及留言。
 
-* How to run the test suite
+### 個人頁面
+- 點擊使用者暱稱可以進入該使用者的個人頁面。
+- 使用者能編輯個人資訊與上傳大頭貼。
+- 在別人的個人頁面能看見該使用者張貼過的文章、回覆過的文章。
+- 在自己的個人頁面能看見自己收藏的文章、未發佈的草稿。
 
-* Services (job queues, cache servers, search engines, etc.)
+### 全站快訊
+- 可看見全站總註冊人數、總文章數、總回覆數。
+- 可看見回覆數前10名的文章。
+- 可看見回覆數前10名的使用者。
 
-* Deployment instructions
+### 使用者認證與後台管理介面
+- 除了首頁以外，其他頁面都需登入才能瀏覽。
+- 後台人員能瀏覽所有使用者，並能更改使用者權限。
+- 後台人員能管理文章分類。
+- 後台人員能刪除任何文章。
 
-* ...
+
+<h2 id="B">B. 設定</h2>
+
+ruby版本：2.5.1
+
+#### 開始
+git clone專案之後請在專案資料夾下執行以下指令：
+```
+$ bundle install
+$ rails db:migrate
+```
+
+#### 假資料
+以下可根據個人需求做設定
+
+建立初始後台管理者及預設文章分類
+```
+$ rails db:seed
+```
+
+建立使用者、文章、回覆等假資料
+```
+$ rails dev:fake_all
+```
+
+<h2 id="C">C. 網站</h2>
+104.199.225.61
